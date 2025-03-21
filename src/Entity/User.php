@@ -42,8 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column]
-    private ?bool $estActif = null;
+
 
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
@@ -124,7 +123,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return $this;
     }
-    
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -161,17 +160,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isEstActif(): ?bool
-    {
-        return $this->estActif;
-    }
-
-    public function setEstActif(bool $estActif): static
-    {
-        $this->estActif = $estActif;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
