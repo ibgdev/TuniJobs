@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CompanyRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
@@ -16,10 +14,10 @@ class Company
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Nom = null;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $matriculeFiscle = null;
+    private ?string $matriculeFiscale = null;
 
     #[ORM\Column(length: 255)]
     private ?string $secteur = null;
@@ -27,35 +25,14 @@ class Company
     #[ORM\Column(length: 255)]
     private ?string $adresse = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $siteweb = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $telephone = null;
-
     #[ORM\Column]
-    private ?bool $statuValidation = null;
+    private ?int $telephone = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?User $responsable = null;
-
-    /**
-     * @var Collection<int, JobOffer>
-     */
-    #[ORM\OneToMany(targetEntity: JobOffer::class, mappedBy: 'entreprise')]
-    private Collection $jobOffers;
-
-    /**
-     * @var Collection<int, Review>
-     */
-    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'entreprise')]
-    private Collection $reviews;
-
-    public function __construct()
-    {
-        $this->jobOffers = new ArrayCollection();
-        $this->reviews = new ArrayCollection();
-    }
+    #[ORM\OneToOne(mappedBy: 'company', cascade: ['persist', 'remove'])]
+    private ?CompanyUser $companyUser = null;
 
     public function getId(): ?int
     {
@@ -64,24 +41,24 @@ class Company
 
     public function getNom(): ?string
     {
-        return $this->Nom;
+        return $this->nom;
     }
 
-    public function setNom(string $Nom): static
+    public function setNom(string $nom): static
     {
-        $this->Nom = $Nom;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getMatriculeFiscle(): ?string
+    public function getMatriculeFiscale(): ?string
     {
-        return $this->matriculeFiscle;
+        return $this->matriculeFiscale;
     }
 
-    public function setMatriculeFiscle(string $matriculeFiscle): static
+    public function setMatriculeFiscale(string $matriculeFiscale): static
     {
-        $this->matriculeFiscle = $matriculeFiscle;
+        $this->matriculeFiscale = $matriculeFiscale;
 
         return $this;
     }
@@ -115,105 +92,38 @@ class Company
         return $this->siteweb;
     }
 
-    public function setSiteweb(?string $siteweb): static
+    public function setSiteweb(string $siteweb): static
     {
         $this->siteweb = $siteweb;
 
         return $this;
     }
 
-    public function getTelephone(): ?string
+    public function getTelephone(): ?int
     {
         return $this->telephone;
     }
 
-    public function setTelephone(string $telephone): static
+    public function setTelephone(int $telephone): static
     {
         $this->telephone = $telephone;
 
         return $this;
     }
 
-    public function isStatuValidation(): ?bool
+    public function getCompanyUser(): ?CompanyUser
     {
-        return $this->statuValidation;
+        return $this->companyUser;
     }
 
-    public function setStatuValidation(bool $statuValidation): static
+    public function setCompanyUser(CompanyUser $companyUser): static
     {
-        $this->statuValidation = $statuValidation;
-
-        return $this;
-    }
-
-    public function getResponsable(): ?User
-    {
-        return $this->responsable;
-    }
-
-    public function setResponsable(?User $responsable): static
-    {
-        $this->responsable = $responsable;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, JobOffer>
-     */
-    public function getJobOffers(): Collection
-    {
-        return $this->jobOffers;
-    }
-
-    public function addJobOffer(JobOffer $jobOffer): static
-    {
-        if (!$this->jobOffers->contains($jobOffer)) {
-            $this->jobOffers->add($jobOffer);
-            $jobOffer->setEntreprise($this);
+        // set the owning side of the relation if necessary
+        if ($companyUser->getCompany() !== $this) {
+            $companyUser->setCompany($this);
         }
 
-        return $this;
-    }
-
-    public function removeJobOffer(JobOffer $jobOffer): static
-    {
-        if ($this->jobOffers->removeElement($jobOffer)) {
-            // set the owning side to null (unless already changed)
-            if ($jobOffer->getEntreprise() === $this) {
-                $jobOffer->setEntreprise(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Review>
-     */
-    public function getReviews(): Collection
-    {
-        return $this->reviews;
-    }
-
-    public function addReview(Review $review): static
-    {
-        if (!$this->reviews->contains($review)) {
-            $this->reviews->add($review);
-            $review->setEntreprise($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReview(Review $review): static
-    {
-        if ($this->reviews->removeElement($review)) {
-            // set the owning side to null (unless already changed)
-            if ($review->getEntreprise() === $this) {
-                $review->setEntreprise(null);
-            }
-        }
+        $this->companyUser = $companyUser;
 
         return $this;
     }
