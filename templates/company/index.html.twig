@@ -9,7 +9,7 @@
 		<div class="mt-4 mb-4">
 			<span>Ajouter une Entreprise :
 			</span>
-			<a href="" class="btn btn-success btn-sm">Ajouter</a>
+			<a href="{{ path('company.add') }}" class="btn btn-success btn-sm">Ajouter</a>
 		</div>
 		<div class="table-responsive">
 			<table class="table table-striped table-hover">
@@ -38,7 +38,7 @@
 						</tr>
 					{% else %}
 						<tr>
-							<td colspan="3" class="text-center text-muted">Aucune entreprise trouvée.</td>
+							<td colspan="4" class="text-center text-muted">Aucune entreprise trouvée.</td>
 						</tr>
 					{% endfor %}
 				</tbody>

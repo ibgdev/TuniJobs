@@ -10,11 +10,11 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // for ($i = 0; $i < 10; $i++) {
-        //     $category = new Category();
-        //     $category->setNom("category" . $i);
-        //     $manager->persist($category);
-        // }
+        for ($i = 0; $i < 10; $i++) {
+            $category = new Category();
+            $category->setNom("category" . $i);
+            $manager->persist($category);
+        }
 
         $manager->flush();
     }
