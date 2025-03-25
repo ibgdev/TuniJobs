@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<nav class="nav d-flex justify-content-between p-3 shadow-sm">
+        <div class="nav-logo">
+			<img src="" alt="TuniJob Logo">
+		</div>
+		<div class="nav-links d-flex">
+			<a class="nav-link active" href="{{ path('company.all') }}" aria-current="page">Entreprise</a>
+			<a class="nav-link" href="{{ path('category.all') }}">Categorie</a>
+			<a class="nav-link" href="#">Test</a>
+		</div>
+		<div>
+			<button class="btn btn-primary">Login</button>
+			<button class="btn btn-dark">Register</button>
+		</div>
+	</nav>
+
+{% endblock %}
