@@ -61,6 +61,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Application::class, mappedBy: 'utilisateur')]
     private Collection $applications;
 
+    #[ORM\OneToOne(mappedBy: 'responsable', cascade: ['persist', 'remove'])]
+    private ?Company $company = null;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -231,6 +234,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $application->setUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($company === null && $this->company !== null) {
+            $this->company->setResponsable(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($company !== null && $company->getResponsable() !== $this) {
+            $company->setResponsable($this);
+        }
+
+        $this->company = $company;
 
         return $this;
     }

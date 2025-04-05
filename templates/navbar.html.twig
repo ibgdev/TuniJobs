@@ -1,18 +1,43 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+	{% block stylesheets %}
+		<link rel="stylesheet" href="{{ asset('styles/nav.css') }}">
+	{% endblock %}
 	<nav class="nav d-flex justify-content-between p-3 shadow-sm">
-        <div class="nav-logo">
-			<img src="" alt="TuniJob Logo">
+		<div class="nav-logo" style="width: 7%; hight: 8%;">
+			<img src="{{ asset('images/tunijobs logo.png') }}" alt="TuniJob Logo" style="width:100%; hight:100%;">
 		</div>
-		<div class="nav-links d-flex">
-			<a class="nav-link active" href="{{ path('company.all') }}" aria-current="page">Entreprise</a>
-			<a class="nav-link" href="{{ path('category.all') }}">Categorie</a>
-			<a class="nav-link" href="#">Test</a>
-		</div>
-		<div>
-			<button class="btn btn-primary">Login</button>
-			<button class="btn btn-dark">Register</button>
-		</div>
-	</nav>
+		<div class="nav-links d-flex justify-content-center align-items-center">
+			{% if is_granted('ROLE_ENTERPRISE') %}
+				<a class="nav-link active" href="{{ path('company.all') }}" aria-current="page">Job Offers</a>
+				<a class="nav-link" href="{{ path('category.all') }}">Applications</a>
+				<a class="nav-link" href="#">Test</a>
+			{% endif %}
 
+			{% if is_granted('ROLE_ADMIN')%}
+				<a class="nav-link active" href="{{ path('company.all') }}" aria-current="page">Entreprise</a>
+				<a class="nav-link" href="{{ path('category.all') }}">Categorie</a>
+				<a class="nav-link" href="#">Test</a>
+			{% endif %}
+			{% if is_granted('ROLE_CANDIDATE')%}
+				<a class="nav-link" href="#">Find a job</a>
+				<a class="nav-link" href="#">Companies</a>
+				<a class="nav-link" href="#">My application</a>
+			{% endif %}
+
+
+		</div>
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			<div class="d-flex justify-content-center align-items-center gap-2">
+				<span>{{ app.user.nom }}!</span>
+				<a class="btn btn-primary" href="{{ path('app_logout') }}">Logout</a>
+			</div>
+		{% else %}
+			<div class="d-flex justify-content-center align-items-center gap-2">
+				<a class="btn btn-primary">Login</a>
+				<a class="btn btn-dark">Register</a>
+			</div>
+		{% endif %}
+	</nav>
 {% endblock %}
+

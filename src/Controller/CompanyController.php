@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class CompanyController extends AbstractController
 {
-    #[Route('/companies', name: 'company.all')]
+    #[Route('/admin/companies', name: 'company.all')]
     public function index( EntityManagerInterface $em): Response
     {
         $companies = $em->getRepository(Company::class)->findAll();
@@ -36,7 +36,7 @@ final class CompanyController extends AbstractController
             'form' => $form 
         ]);
     }
-    #[Route('/company/edit/{id}', name: 'company.edit')]
+    #[Route('/admin/company/edit/{id}', name: 'company.edit')]
     public function edit( EntityManagerInterface $em, Request $request, Company $company): Response
     {
         $form = $this->createForm(CompanyType::class, $company);
@@ -51,7 +51,7 @@ final class CompanyController extends AbstractController
             'form' => $form 
         ]);
     }
-    #[Route('/company/delete/{id}', name: 'company.delete')]
+    #[Route('/admin/company/delete/{id}', name: 'company.delete')]
     public function delete( EntityManagerInterface $em, Company $company): Response
     {
         $em->remove($company);

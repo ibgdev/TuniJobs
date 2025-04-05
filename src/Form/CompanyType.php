@@ -13,17 +13,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CompanyType extends AbstractType
 {
-    private $companyUserRepository;
-
-    public function __construct(CompanyUserRepository $companyUserRepository)
-    {
-        $this->companyUserRepository = $companyUserRepository;
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        // Fetch users without a company
-        $usersWithoutCompany = $this->companyUserRepository->findUsersWithoutCompany();
 
         $builder
             ->add('nom')

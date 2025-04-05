@@ -26,8 +26,8 @@
 					{% for company in companies %}
 						<tr>
 							<td>{{ company.nom }}</td>
-							{% if (company.companyUser is not null) %}
-								<td>{{ company.companyUser.nom }}</td>
+							{% if (company.responsable is not null) %}
+								<td>{{ company.responsable.nom }}</td>
 							{% else %}
 								<td>Non attribué</td>
 							{% endif %}

@@ -31,8 +31,9 @@ class Company
     #[ORM\Column]
     private ?int $telephone = null;
 
-    #[ORM\OneToOne(mappedBy: 'company', cascade: ['persist', 'remove'])]
-    private ?CompanyUser $companyUser = null;
+    #[ORM\OneToOne(inversedBy: 'company', cascade: ['persist', 'remove'])]
+    private ?User $responsable = null;
+
 
     public function getId(): ?int
     {
@@ -111,19 +112,14 @@ class Company
         return $this;
     }
 
-    public function getCompanyUser(): ?CompanyUser
+    public function getResponsable(): ?User
     {
-        return $this->companyUser;
+        return $this->responsable;
     }
 
-    public function setCompanyUser(CompanyUser $companyUser): static
+    public function setResponsable(?User $responsable): static
     {
-        // set the owning side of the relation if necessary
-        if ($companyUser->getCompany() !== $this) {
-            $companyUser->setCompany($this);
-        }
-
-        $this->companyUser = $companyUser;
+        $this->responsable = $responsable;
 
         return $this;
     }
