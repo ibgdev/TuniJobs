@@ -398,8 +398,8 @@ h1 {
 /* Dark Mode Toggle */
 .dark-mode-toggle {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    bottom: 20px;
+    left: 20px;
     width: 40px;
     height: 40px;
     background-color: white;

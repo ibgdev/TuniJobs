@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Offres d'emploi{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/job_offers.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    
+    <div class="container">
+        <div class="page-header">
+            <h1><i class="fas fa-briefcase me-2"></i>Mes Offres d'emploi</h1>
+            <a href="{{ path('job.entreprise.add') }}" class="btn" style="background-color: #4A0B6F; color: white;">
+                <i class="fas fa-plus"></i> Nouvelle Offre
+            </a>
+        </div>
+
+        {% if jobOffers is empty %}
+            <div class="empty-state">
+                <i class="fas fa-file-alt"></i>
+                <h3>Aucune offre d'emploi trouvée</h3>
+                <p>Vous n'avez pas encore publié d'offres d'emploi.</p>
+                <a href="" class="btn btn-primary mt-3">
+                    <i class="fas fa-plus"></i> Créer une offre
+                </a>
+            </div>
+        {% else %}
+            <div class="job-grid">
+                {% for jobOffer in jobOffers %}
+                    <div class="job-card">
+                        <div class="card-header">
+                            <h2 class="job-title">{{ jobOffer.titre }}</h2>
+                            <span class="job-category">
+                                {{ jobOffer.categorie.nom ?? 'Sans catégorie' }}
+                            </span>
+                            <span class="job-salary">
+                                <i class="fas fa-money-bill-wave"></i>
+                                {{ jobOffer.salaire }} TND
+                            </span>
+                        </div>
+                        
+                        <div class="card-body">
+                            <p class="job-description">
+                                {{ jobOffer.description|length > 200 ? jobOffer.description|slice(0, 200) ~ '...' : jobOffer.description }}
+                            </p>
+                            
+                            <div class="job-meta">
+                                <span class="job-meta-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Publié le {{ jobOffer.datePublication|date('d/m/Y') }}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="" class="btn btn-outline">
+                                <i class="fas fa-eye"></i> détails
+                            </a>
+                            <div class="action-buttons">
+                                <a href="{{ path('job.entreprise.edit',{'id': jobOffer.id}) }}" class="btn btn-edit">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </a>
+                                <form method="post" action="{{ path('job.entreprise.delete',{'id': jobOffer.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ jobOffer.id) }}">
+                                    <button type="submit" class="btn btn-delete">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

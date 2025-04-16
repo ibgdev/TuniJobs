@@ -4,38 +4,41 @@
 		<link rel="stylesheet" href="{{ asset('styles/nav.css') }}">
 	{% endblock %}
 	<nav class="nav d-flex justify-content-between p-3 shadow-sm">
-		<div class="nav-logo" style="width: 7%; hight: 8%;">
-			<img src="{{ asset('images/tunijobs logo.png') }}" alt="TuniJob Logo" style="width:100%; hight:100%;">
+		<div class="nav-logo" style="width: clamp(7%,40vw,100px); hight: 8%;">
+			<a href="{{ path("app_home") }}"><img src="{{ asset('images/tunijobs logo.png') }}" alt="TuniJob Logo" style="width:100%; hight:100%;"></a>
 		</div>
 		<div class="nav-links d-flex justify-content-center align-items-center">
 			{% if is_granted('ROLE_ENTERPRISE') %}
-				<a class="nav-link active" href="{{ path('company.all') }}" aria-current="page">Job Offers</a>
-				<a class="nav-link" href="{{ path('category.all') }}">Applications</a>
-				<a class="nav-link" href="#">Test</a>
+				<a class="nav-link active" href="{{ path('job.entreprise') }}" style="color: #4A0B6F" aria-current="page">Job Offers</a>
+				<a class="nav-link" href="{{ path('category.all') }}" style="color: #4A0B6F">Applications</a>
+				<a class="nav-link" href="#" style="color: #4A0B6F">Test</a>
 			{% endif %}
 
 			{% if is_granted('ROLE_ADMIN')%}
-				<a class="nav-link active" href="{{ path('company.all') }}" aria-current="page">Entreprise</a>
-				<a class="nav-link" href="{{ path('category.all') }}">Categorie</a>
-				<a class="nav-link" href="#">Test</a>
+				<a class="nav-link active" href="{{ path('company.all') }}" style="color: #4A0B6F" aria-current="page">Entreprise</a>
+				<a class="nav-link" href="{{ path('category.all') }}" style="color: #4A0B6F">Categorie</a>
+				<a class="nav-link" href="#" style="color: #4A0B6F">Test</a>
 			{% endif %}
-			{% if is_granted('ROLE_CANDIDATE')%}
-				<a class="nav-link" href="#">Find a job</a>
-				<a class="nav-link" href="#">Companies</a>
-				<a class="nav-link" href="#">My application</a>
+			{% if is_granted('ROLE_CANDIDATE') %}
+				<a class="nav-link" style="color: #4A0B6F" href="#">Find a job</a>
+				<a class="nav-link" href="#" style="color: #4A0B6F">Companies</a>
+				<a class="nav-link" href="#" style="color: #4A0B6F">My application</a>
 			{% endif %}
-
-
-		</div>
+			{% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
+				<a class="nav-link" style="color: #4A0B6F" href="#">Find a job</a>
+				<a class="nav-link" href="#" style="color: #4A0B6F">Companies</a>
+				<a class="nav-link" href="#" style="color: #4A0B6F">My application</a>
+			{% endif %}
+			</div>
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 			<div class="d-flex justify-content-center align-items-center gap-2">
-				<span>{{ app.user.nom }}!</span>
-				<a class="btn btn-primary" href="{{ path('app_logout') }}">Logout</a>
+				<span class="text-dark">{{ app.user.nom }}!</span>
+				<a class="btn" href="{{ path('app_logout') }}" style="background-color: #4A0B6F; color : white;">Logout</a>
 			</div>
 		{% else %}
 			<div class="d-flex justify-content-center align-items-center gap-2">
-				<a class="btn btn-primary">Login</a>
-				<a class="btn btn-dark">Register</a>
+				<a class="btn " style="background-color: whie; color : #4A0B6F; border: 1px #4A0B6F solid" href="{{ path('app_login') }}">Login</a>
+				<a class="btn btn-dark" style="background-color: #4A0B6F; color : white;">Register</a>
 			</div>
 		{% endif %}
 	</nav>

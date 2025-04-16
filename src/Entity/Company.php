@@ -34,6 +34,9 @@ class Company
     #[ORM\OneToOne(inversedBy: 'company', cascade: ['persist', 'remove'])]
     private ?User $responsable = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $LogoUrl = null;
+
 
     public function getId(): ?int
     {
@@ -120,6 +123,18 @@ class Company
     public function setResponsable(?User $responsable): static
     {
         $this->responsable = $responsable;
+
+        return $this;
+    }
+
+    public function getLogoUrl(): ?string
+    {
+        return $this->LogoUrl;
+    }
+
+    public function setLogoUrl(?string $LogoUrl): static
+    {
+        $this->LogoUrl = $LogoUrl;
 
         return $this;
     }

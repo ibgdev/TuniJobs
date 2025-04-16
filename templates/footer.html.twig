@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	{% block stylesheets %}
+		<link rel="stylesheet" href="{{ asset('styles/footer.css') }}">
+	{% endblock %}
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h3>TuniJobs</h3>
+                <p>Votre plateforme d'emploi en Tunisie</p>
+            </div>
+            <div class="footer-links">
+                <h4>Liens rapides</h4>
+                <ul>
+                    <li><a href="#categories">Catégories</a></li>
+                    <li><a href="#jobs">Offres d'emploi</a></li>
+                    <li><a href="#how-it-works">Comment ça marche</a></li>
+                    <li><a href="#testimonials">Témoignages</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p><i class="fas fa-envelope"></i> contact@tunijobs.com</p>
+                <p><i class="fas fa-phone"></i> +216 71 123 456</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 TuniJobs. Tous droits réservés.</p>
+        </div>
+    </div>
+</footer>
+{% endblock %}

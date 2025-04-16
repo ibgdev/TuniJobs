@@ -19,17 +19,16 @@ class JobOfferRepository extends ServiceEntityRepository
 //    /**
 //     * @return JobOffer[] Returns an array of JobOffer objects
 //     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('j')
-//            ->andWhere('j.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('j.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByCompanyId($value): array
+    {
+        return $this->createQueryBuilder('j')
+            ->andWhere('j.entreprise = :val')
+            ->setParameter('val', $value)
+            ->orderBy('j.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?JobOffer
 //    {

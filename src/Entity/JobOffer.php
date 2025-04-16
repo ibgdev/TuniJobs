@@ -39,6 +39,9 @@ class JobOffer
     #[ORM\OneToMany(targetEntity: Application::class, mappedBy: 'job_offer')]
     private Collection $applications;
 
+    #[ORM\Column(length: 255)]
+    private ?string $location = null;
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
@@ -147,6 +150,18 @@ class JobOffer
                 $application->setJobOffer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): static
+    {
+        $this->location = $location;
 
         return $this;
     }
