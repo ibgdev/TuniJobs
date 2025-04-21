@@ -1,0 +1,36 @@
+/* Avatar */
+.dropdown button {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc; /* Default avatar background color */
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    min-width: 200px;
+}
+
+.logout{
+    background-color: #4A0B6F;
+    color: white;
+}
+.logout:hover{
+    background-color: #553a64;
+    color: white;
+}
+
+.dropdown-menu{
+    padding: 10% 0 ;
+    border-radius: 10px;
+}
+.dropdown-item{
+    border-radius: 5px;
+    height: 120%;
+    width: 100%;
+    margin: 0;
+}

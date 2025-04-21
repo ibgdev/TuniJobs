@@ -53,7 +53,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         }elseif (in_array('ROLE_ENTERPRISE', $token->getRoleNames(), true)) {
             return new RedirectResponse($this->urlGenerator->generate('main.entreprise'));
         }else {
-            return new RedirectResponse($this->urlGenerator->generate('main.condidate'));
+            return new RedirectResponse($this->urlGenerator->generate('app_home'));
         }
     }
 

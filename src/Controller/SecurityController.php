@@ -18,7 +18,7 @@ class SecurityController extends AbstractController
             } elseif ($this->isGranted('ROLE_ENTERPRISE')) {
                 return $this->redirectToRoute('main.entreprise');
             } elseif ($this->isGranted('ROLE_CANDIDATE')) {
-                return $this->redirectToRoute('main.condidate');
+                return $this->redirectToRoute('app_home');
             } else {
                 return $this->redirectToRoute('job.all');
             }

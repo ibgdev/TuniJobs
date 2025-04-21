@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ company.nom }} - Company Details{% endblock %}
+{% block title %}{{ company.nom }} - Détails de l'entreprise{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('styles/company.css') }}">
@@ -12,7 +12,7 @@
     <div class="container">
         <div class="company-header">
             <div class="logo-container">
-                <img src="{{ company.logoUrl }}" alt="Company Logo" class="company-logo">
+                <img src="{{ company.logoUrl }}" alt="Logo de l'entreprise" class="company-logo">
                 <div class="logo-shadow"></div>
             </div>
             <h1 class="company-title">{{ company.nom }}</h1>
@@ -27,7 +27,7 @@
                     </svg>
                 </div>
                 <div class="info-content">
-                    <h3>Tax ID</h3>
+                    <h3>Matricule Fiscale</h3>
                     <p>{{ company.MatriculeFiscale }}</p>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     </svg>
                 </div>
                 <div class="info-content">
-                    <h3>Sector</h3>
+                    <h3>Secteur</h3>
                     <p>{{ company.secteur }}</p>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                     </svg>
                 </div>
                 <div class="info-content">
-                    <h3>Address</h3>
+                    <h3>Adresse</h3>
                     <p>{{ company.adresse }}</p>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                     </svg>
                 </div>
                 <div class="info-content">
-                    <h3>Website</h3>
+                    <h3>Site Web</h3>
                     <p>
                         {% if company.siteweb %}
                             <a href="{{ company.siteweb }}" target="_blank">{{ company.siteweb }}</a>
@@ -82,7 +82,7 @@
                     </svg>
                 </div>
                 <div class="info-content">
-                    <h3>Phone</h3>
+                    <h3>Téléphone</h3>
                     <p>{{ company.telephone }}</p>
                 </div>
             </div>
@@ -94,60 +94,17 @@
                     </svg>
                 </div>
                 <div class="info-content">
-                    <h3>Manager</h3>
+                    <h3>Responsable</h3>
                     <p>
                         {% if company.responsable %}
                             {{ company.responsable.nom }}
                         {% else %}
-                            <span class="badge">Not assigned</span>
+                            <span class="badge">Non assigné</span>
                         {% endif %}
                     </p>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Dark Mode Toggle -->
-    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
-        <svg class="light-icon" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-        </svg>
-        <svg class="dark-icon" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-        </svg>
-    </button>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-            
-            // Set initial theme
-            function setTheme(isDark) {
-                document.body.classList.toggle('dark-mode', isDark);
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            }
-            
-            // Check for saved preference or system setting
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                setTheme(savedTheme === 'dark');
-            } else {
-                setTheme(prefersDark.matches);
-            }
-            
-            // Toggle theme on button click
-            darkModeToggle.addEventListener('click', () => {
-                const isDark = !document.body.classList.contains('dark-mode');
-                setTheme(isDark);
-            });
-            
-            // Watch for system theme changes
-            prefersDark.addEventListener('change', e => {
-                if (!localStorage.getItem('theme')) {
-                    setTheme(e.matches);
-                }
-            });
-        });
-    </script>
 {% endblock %}
+    

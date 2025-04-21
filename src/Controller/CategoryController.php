@@ -16,7 +16,7 @@ final class CategoryController extends AbstractController
     public function index(EntityManagerInterface $em): Response
     {
         $categories = $em->getRepository(Category::class)->findAll();
-        return $this->render('category/index.html.twig', [
+        return $this->render('admin/category/index.html.twig', [
             'categories' => $categories
         ]);
     }
@@ -31,7 +31,7 @@ final class CategoryController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('category.all');
         }
-        return $this->render('category/add.html.twig', [
+        return $this->render('admin/category/add.html.twig', [
             'form' => $form
         ]);
     }
@@ -45,7 +45,7 @@ final class CategoryController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('category.all');
         }
-        return $this->render('category/edit.html.twig', [
+        return $this->render('admin/category/edit.html.twig', [
             'form' => $form
         ]);
     }

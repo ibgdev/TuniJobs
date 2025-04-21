@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\JobOffer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,8 +17,11 @@ final class JobOfferController extends AbstractController
     #[Route('/jobs', name: 'job.all')]
     public function index(EntityManagerInterface $em): Response
     {
-        return $this->render('job_offer/index.html.twig', [
-            'controller_name' => 'JobOfferController',
+        $jobOffers = $em->getRepository(JobOffer::class)->findAll();
+        return $this->render('condidate/jobs.html.twig', [
+            'joboffers' => $jobOffers,
+            'locations' => $this->getTunisianGovernorates(),
+            'categories' => $em->getRepository(Category::class)->findAll(),
         ]);
     }
     #[Route('/entreprise/jobs', name: 'job.entreprise')]
@@ -45,6 +49,7 @@ final class JobOfferController extends AbstractController
             $user = $this->getUser();
             $company = $user->getCompany();
             $jobOffer->setEntreprise($company);
+            $this->addFlash('success', 'offre ajouté avec succée!');
             $em->persist($jobOffer);
             $em->flush();
 
@@ -62,12 +67,14 @@ final class JobOfferController extends AbstractController
         $form = $this->createForm(JobOfferType::class, $jobOffer);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'offre mise à jour avec succée!');
             $em->persist($jobOffer);
             $em->flush();
             return $this->redirectToRoute('job.entreprise');
         }
         return $this->render('entreprise/jobs_edit.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'jobOffer' => $jobOffer,
         ]);
     }
     #[Route('/entreprise/jobs/delete/{id}', name: 'job.entreprise.delete')]
@@ -76,5 +83,17 @@ final class JobOfferController extends AbstractController
         $em->remove($jobOffer);
         $em->flush();
         return $this->redirectToRoute('job.entreprise');
+    }
+
+    public function getTunisianGovernorates(): array
+    {
+        $governorates = [
+            'Ariana', 'Béja', 'Ben Arous', 'Bizerte', 'Gabès', 'Gafsa', 'Jendouba', 'Kairouan',
+            'Kasserine', 'Kébili', 'Le Kef', 'Mahdia', 'La Manouba', 'Médenine', 'Monastir',
+            'Nabeul', 'Sfax', 'Sidi Bouzid', 'Siliana', 'Sousse', 'Tataouine', 'Tozeur',
+            'Tunis', 'Zaghouan'
+        ];
+
+        return array_combine($governorates, $governorates);
     }
 }

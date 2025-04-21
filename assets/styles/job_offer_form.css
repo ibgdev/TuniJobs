@@ -1,0 +1,57 @@
+.job-offer-form-section {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+}
+
+.form-card {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(74, 11, 111, 0.1);
+    border: 1px solid #d6cbe3;
+}
+
+.form-card h2 {
+    font-size: 2rem;
+    color: #4A0B6F;
+}
+
+.form-card label {
+    font-weight: 600;
+    color: #4A0B6F;
+}
+
+.form-card .form-control {
+    border-radius: 0.5rem;
+    border: 1px solid #d6cbe3;
+    padding: 0.75rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-card .form-control:focus {
+    border-color: #4A0B6F;
+    box-shadow: 0 0 0 0.25rem rgba(74, 11, 111, 0.2);
+}
+
+.form-card .btn-primary {
+    background-color: #4A0B6F;
+    border: none;
+    transition: background-color 0.3s ease;
+    color: white;
+}
+
+.form-card .btn-primary:hover {
+    background-color: #3a0859;
+}
+
+.form-card .btn-outline-secondary {
+    font-size: 0.9rem;
+    border-radius: 20px;
+    border-color: #4A0B6F;
+    color: #4A0B6F;
+}
+
+.form-card .btn-outline-secondary:hover {
+    background-color: #4A0B6F;
+    color: white;
+}

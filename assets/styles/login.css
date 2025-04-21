@@ -463,3 +463,27 @@ h1 {
 .fade-in {
     animation: fadeIn 0.6s ease-out forwards;
 }
+
+/* Lien Retour à l'accueil en haut à gauche */
+/* Lien Retour à l'accueil en haut à gauche */
+.back-to-home {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 40px; /* Taille du cercle */
+    height: 40px; /* Taille du cercle */
+    background-color: #3b82f6;
+    color: white;
+    text-decoration: none;
+    border-radius: 50%; /* Transforme en cercle */
+    font-weight: 500;
+    display: flex;
+    justify-content: center; /* Centrer le texte/icon */
+    align-items: center; /* Centrer le texte/icon */
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.back-to-home:hover {
+    background-color: #2563eb;
+}

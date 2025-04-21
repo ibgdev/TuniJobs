@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Offres d'emploi{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/jobs.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    
+    <div class="container">
+        <div class="page-header">
+            <h1><i class="fas fa-briefcase me-2"></i>Les Offres d'emploi</h1>
+        </div>
+
+        <!-- Formulaire de recherche -->
+        <form method="get" action="" class="job-search-form mb-4">
+            <div class="input-group">
+                <!-- Recherche par titre -->
+                <input type="text" name="search" class="form-control" placeholder="Rechercher une offre..." value="{{ app.request.query.get('search') }}">
+
+                <!-- Filtre par catégorie -->
+                <select name="category" class="form-control">
+                    <option value="">Choisir une catégorie</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if app.request.query.get('category') == category.id %}selected{% endif %}>
+                            {{ category.nom }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <!-- Filtre par localisation -->
+                <select name="location" class="form-control">
+                    <option value="">Choisir une ville</option>
+                    {% for location in locations %}
+                        <option value="{{ location }}" {% if app.request.query.get('category') == location %}selected{% endif %}>
+                            {{ location }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+
+                <!-- Bouton de recherche -->
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+
+        {% if joboffers is empty %}
+            <div class="empty-state">
+                <i class="fas fa-file-alt"></i>
+                <h3>Aucune offre d'emploi trouvée</h3>
+            </div>
+        {% else %}
+            <div class="job-grid">
+                {% for jobOffer in joboffers %}
+                    <div class="job-card">
+                        <div class="card-header">
+                            <h2 class="job-title">{{ jobOffer.titre }}</h2>
+                            <span class="job-category">
+                                {{ jobOffer.categorie.nom ?? 'Sans catégorie' }}
+                            </span>
+                            <span class="job-salary">
+                                <i class="fas fa-money-bill-wave"></i>
+                                {{ jobOffer.salaire }} TND
+                            </span>
+                        </div>
+                        
+                        <div class="card-body">
+                            <p class="job-description">
+                                {{ jobOffer.description|length > 200 ? jobOffer.description|slice(0, 200) ~ '...' : jobOffer.description }}
+                            </p>
+                            
+                            <div class="job-meta">
+                                <span class="job-meta-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Publié le {{ jobOffer.datePublication|date('d/m/Y') }}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="" class="btn btn-outline">
+                                <i class="fas fa-eye"></i> Détails
+                            </a>
+                            <form method="post" action="">
+                                <input type="hidden" name="_token" value="{{ csrf_token('apply' ~ jobOffer.id) }}">
+                                <button type="submit" class="btn btn-apply text-light">
+                                    <i class="fas fa-paper-plane"></i> Postuler
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    {% include 'footer.html.twig' %}
+{% endblock %}

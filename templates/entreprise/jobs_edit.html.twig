@@ -1,8 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes Offres d'emploi{% endblock %}
+{% block title %}Ajouter une Offre d'emploi{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/job_offer_form.css') }}">
+{% endblock %}
 
 {% block body %}
     {% include 'navbar.html.twig' %}
-    {{ form(form) }}
+
+    <section class="job-offer-form-section py-5">
+        <div class="container">
+            <div class="form-card shadow-lg p-5 rounded-4 bg-white">
+                <h2 class="mb-4 text-center fw-bold">Modifier l'offre {{jobOffer.titre}}</h2>
+                
+                <a href="{{ path('main.entreprise') }}" class="btn btn-outline-secondary mb-4">
+                    ← Retour à mes offres
+                </a>
+
+                {{ form_start(form) }}
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form_row(form.titre) }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form_row(form.salaire) }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form_row(form.location) }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form_row(form.categorie) }}
+                        </div>
+                        <div class="col-12 mb-3">
+                            {{ form_row(form.description) }}
+                        </div>
+                        <div class="text-center mt-4">
+                            <button class="btn btn-primary px-5 py-2 rounded-pill fw-semibold" type="submit">
+                                💼 Enregistrer
+                            </button>
+                        </div>
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </section>
 {% endblock %}
