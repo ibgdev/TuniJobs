@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
+use App\Entity\JobOffer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,9 +22,24 @@ final class HomeController extends AbstractController
                 return $this->redirectToRoute('main.entreprise');
             }
         }
-        $offers = $em->getRepository('App\Entity\JobOffer')->findAll();
+        $offers = $em->getRepository(JobOffer::class)->findAll();
+        $categories = $em->getRepository(Category::class)->findAll();
         return $this->render('home/index.html.twig', [
         'featuredJobs' => $offers,
+        'categories' => $categories,
+        'locations' => $this->getTunisianGovernorates(),
         ]);
+    }
+
+    public function getTunisianGovernorates(): array
+    {
+        $governorates = [
+            'Ariana', 'Béja', 'Ben Arous', 'Bizerte', 'Gabès', 'Gafsa', 'Jendouba', 'Kairouan',
+            'Kasserine', 'Kébili', 'Le Kef', 'Mahdia', 'La Manouba', 'Médenine', 'Monastir',
+            'Nabeul', 'Sfax', 'Sidi Bouzid', 'Siliana', 'Sousse', 'Tataouine', 'Tozeur',
+            'Tunis', 'Zaghouan'
+        ];
+
+        return array_combine($governorates, $governorates);
     }
 }

@@ -34,7 +34,7 @@
                 <select name="location" class="form-control">
                     <option value="">Choisir une ville</option>
                     {% for location in locations %}
-                        <option value="{{ location }}" {% if app.request.query.get('category') == location %}selected{% endif %}>
+                        <option value="{{ location }}" {% if app.request.query.get('location') == location %}selected{% endif %}>
                             {{ location }}
                         </option>
                     {% endfor %}

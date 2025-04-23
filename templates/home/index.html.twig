@@ -18,33 +18,38 @@
             <p class="subtitle animate-element">Connectez avec les meilleures opportunités professionnelles à travers tout le pays</p>
             
             <div class="search-container animate-element">
-                <form action="" method="get">
-                    <div class="search-input">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <select name="location">
-                            <option value="">Catégories</option>
-                            <option value="Tunis">Tunis</option>
-                            <option value="Sfax">Sfax</option>
-                            <option value="Sousse">Sousse</option>
-                            <option value="Nabeul">Nabeul</option>
-                            <option value="Monastir">Monastir</option>
-                        </select>
-                    </div>
-                    <div class="search-input">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <select name="location">
-                            <option value="">Toute la Tunisie</option>
-                            <option value="Tunis">Tunis</option>
-                            <option value="Sfax">Sfax</option>
-                            <option value="Sousse">Sousse</option>
-                            <option value="Nabeul">Nabeul</option>
-                            <option value="Monastir">Monastir</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="search-button">
-                        <i class="fas fa-search"></i> Rechercher
-                    </button>
-                </form>
+        <!-- Formulaire de recherche -->
+        <form method="get" action="" class="job-search-form">
+            <div class="input-group">
+                <!-- Recherche par titre -->
+                <input type="text" name="search" class="form-control" placeholder="Rechercher une offre..." value="{{ app.request.query.get('search') }}">
+
+                <!-- Filtre par catégorie -->
+                <select name="category" class="form-control">
+                    <option value="">Choisir une catégorie</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if app.request.query.get('category') == category.id %}selected{% endif %}>
+                            {{ category.nom }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <!-- Filtre par localisation -->
+                <select name="location" class="form-control">
+                    <option value="">Choisir une ville</option>
+                    {% for location in locations %}
+                        <option value="{{ location }}" {% if app.request.query.get('location') == location %}selected{% endif %}>
+                            {{ location }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+
+                <!-- Bouton de recherche -->
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
             </div>
             
         </div>
