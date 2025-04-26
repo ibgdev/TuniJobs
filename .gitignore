@@ -10,7 +10,7 @@
 .env
 /src/DataFixtures/
 ###< symfony/framework-bundle ###
-
+TODO
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
@@ -25,3 +25,4 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+/.vscode
