@@ -1,0 +1,189 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les entreprises | Annuaire Professionnel{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/companies.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('keyup', function() {
+                const searchValue = this.value.toLowerCase();
+                const companyCards = document.querySelectorAll('.company-card');
+                
+                companyCards.forEach(card => {
+                    const companyName = card.querySelector('.card-title').textContent.toLowerCase();
+                    const companySector = card.querySelector('.secteur').textContent.toLowerCase();
+                    
+                    if (companyName.includes(searchValue) || companySector.includes(searchValue)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide empty state message
+                const visibleCards = document.querySelectorAll('.company-card[style="display: block"]');
+                document.getElementById('noResults').style.display = visibleCards.length === 0 ? 'block' : 'none';
+            });
+            
+            // Sector filter
+            const sectorLinks = document.querySelectorAll('.sector-filter');
+            sectorLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Update active filter
+                    sectorLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const sector = this.getAttribute('data-sector');
+                    const companyCards = document.querySelectorAll('.company-card');
+                    
+                    companyCards.forEach(card => {
+                        const companySector = card.querySelector('.secteur').textContent.trim().toLowerCase();
+                        
+                        if (sector === 'all' || companySector.includes(sector.toLowerCase())) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    
+                    // Show/hide empty state message
+                    const visibleCards = Array.from(companyCards).filter(c => c.style.display !== 'none');
+                    document.getElementById('noResults').style.display = visibleCards.length === 0 ? 'block' : 'none';
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    
+    <div class="hero-section">
+        <div class="container">
+            <h1>Annuaire des Entreprises</h1>
+            <p>Trouvez facilement les informations professionnelles dont vous avez besoin</p>
+        </div>
+    </div>
+    
+    <div class="container mt-4">
+        <div class="search-filter-container">
+            <div class="search-container">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Rechercher une entreprise ou un secteur..." class="search-input">
+            </div>
+            
+            <div class="filter-container">
+                <div class="filter-label">Filtrer par secteur:</div>
+                <div class="filter-options">
+                    <a href="#" class="sector-filter active" data-sector="all">Tous</a>
+                    {% set sectors = [] %}
+                    {% for company in companies %}
+                        {% if company.secteur not in sectors %}
+                            {% set sectors = sectors|merge([company.secteur]) %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% for sector in sectors %}
+                        <a href="#" class="sector-filter" data-sector="{{ sector }}">{{ sector }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="companies-stats">
+            <div class="stat-item">
+                <i data-lucide="building"></i>
+                <div class="stat-details">
+                    <span class="stat-count">{{ companies|length }}</span>
+                    <span class="stat-label">Entreprises</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <i data-lucide="briefcase"></i>
+                <div class="stat-details">
+                    <span class="stat-count">{{ sectors|length }}</span>
+                    <span class="stat-label">Secteurs</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4" id="companiesContainer">
+            {% for company in companies %}
+                <div class="col-md-6 col-lg-4 mb-4 company-card">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <i data-lucide="building"></i> {{ company.nom }}
+                            </h5>
+                            <span class="card-text secteur">
+                                <i data-lucide="briefcase"></i>
+                                {{ company.secteur }}
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <i data-lucide="badge-percent"></i> 
+                                <span class="info-label">Matricule Fiscale:</span> 
+                                <span class="info-value">{{ company.matriculeFiscale }}</span>
+                            </p>
+                            <p class="card-text">
+                                <i data-lucide="map-pin"></i> 
+                                <span class="info-label">Adresse:</span> 
+                                <span class="info-value">{{ company.adresse }}</span>
+                            </p>
+                            <p class="card-text">
+                                <i data-lucide="globe"></i>
+                                <span class="info-label">Site Web:</span> 
+                                <span class="info-value">
+                                    <a href="{{ company.siteweb }}" target="_blank">{{ company.siteweb }}</a>
+                                </span>
+                            </p>
+                            <p class="card-text">
+                                <i data-lucide="phone"></i> 
+                                <span class="info-label">Téléphone:</span> 
+                                <span class="info-value">{{ company.telephone }}</span>
+                            </p>
+                            <p class="card-text">
+                                <i data-lucide="user"></i>
+                                <span class="info-label">Responsable:</span>
+                                <span class="info-value">
+                                    {% if company.responsable %}
+                                        {{ company.responsable.nom }}
+                                    {% else %}
+                                        <em>Pas de responsable</em>
+                                    {% endif %}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn-contact" data-company="{{ company.nom }}">
+                                <i data-lucide="mail"></i> Contacter
+                            </a>
+                            <a href="#" class="btn-details" data-company="{{ company.id }}">
+                                <i data-lucide="eye"></i> Détails
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            
+            <div id="noResults" class="no-results" style="display: none;">
+                <div class="empty-state">
+                    <i data-lucide="search-x" class="empty-icon"></i>
+                    <h3>Aucune entreprise trouvée</h3>
+                    <p>Essayez de modifier vos critères de recherche</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% include "footer.html.twig" %}
+{% endblock %}

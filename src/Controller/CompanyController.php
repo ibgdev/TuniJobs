@@ -20,6 +20,15 @@ final class CompanyController extends AbstractController
             'companies' => $companies,
         ]);
     }
+    #[Route('/companies', name: 'cond.company.all')]
+    public function companies( EntityManagerInterface $em): Response
+    {
+        $companies = $em->getRepository(Company::class)->findAll();
+
+        return $this->render('condidate/companies.html.twig', [
+            'companies' => $companies,
+        ]);
+    }
     #[Route('/company/add', name: 'company.add')]
     public function add( EntityManagerInterface $em, Request $request): Response
     {

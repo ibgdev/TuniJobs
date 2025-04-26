@@ -91,27 +91,51 @@
 					Se connecter
 					<div class="spinner" id="spinner"></div>
 				</button>
+				<p class="signin-link">
+					N'as pas déjà un compte?
+					<a href="{{ path('app_register') }}">S'inscrire</a>
+				</p>
 			</form>
 		</div>
 	</div>
 
 	<script>
 		// Changement de thème
+// Changement de thème
 const darkModeToggle = document.getElementById('darkModeToggle');
 const lightIcon = document.getElementById('lightIcon');
 const darkIcon = document.getElementById('darkIcon');
+const body = document.getElementsByClassName('body')[0];
 
-localStorage.setItem('theme', 'light');
-document.getElementsByClassName('body')[0].classList.remove('dark-mode');
-lightIcon.style.display = 'block';
-darkIcon.style.display = 'none';
+// Vérifie le thème sauvegardé
+if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark-mode');
+    lightIcon.style.display = 'none';
+    darkIcon.style.display = 'block';
+} else {
+    body.classList.remove('dark-mode');
+    lightIcon.style.display = 'block';
+    darkIcon.style.display = 'none';
+}
 
 darkModeToggle.addEventListener('click', () => {
-const isDark = document.getElementsByClassName('body')[0].classList.toggle('dark-mode');
-localStorage.setItem('theme', isDark ? 'dark' : 'light');
-lightIcon.style.display = isDark ? 'none' : 'block';
-darkIcon.style.display = isDark ? 'block' : 'none';
+    const isDark = body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    lightIcon.style.display = isDark ? 'none' : 'block';
+    darkIcon.style.display = isDark ? 'block' : 'none';
 });
+
+// Animation lors de la soumission du formulaire
+const loginForm = document.getElementById('loginForm');
+const submitBtn = document.getElementById('submitBtn');
+const spinner = document.getElementById('spinner');
+
+if (loginForm) {
+loginForm.addEventListener('submit', function () {
+submitBtn.classList.add('loading');
+spinner.style.display = 'block';
+});
+}
 	</script>
 {% endblock %}
 
