@@ -48,6 +48,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ;
         }
 
+        public function findUserHasNoCompany(): array
+        {
+            return $this->createQueryBuilder('u')
+                ->leftJoin('u.company', 'c')
+                ->where('c.id IS NULL')
+                ->orderBy('u.id', 'ASC')
+                ->getQuery()
+                ->getResult();
+        }
+        
+
     //    public function findOneBySomeField($value): ?User
     //    {
     //        return $this->createQueryBuilder('u')

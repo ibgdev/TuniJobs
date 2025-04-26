@@ -24,6 +24,9 @@ class CompanyType extends AbstractType
             ->add('adresse')
             ->add('siteweb')
             ->add('telephone')
+            ->add('logo_url', null, [
+                'label' => 'Logo URL',
+            ])
             // ->add('companyUser', EntityType::class, [
             //     'class' => CompanyUser::class,
             //     'choices' => $usersWithoutCompany,

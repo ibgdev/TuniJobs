@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Company;
+use App\Entity\User;
 use App\Form\CompanyType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,9 +16,11 @@ final class CompanyController extends AbstractController
     public function index( EntityManagerInterface $em): Response
     {
         $companies = $em->getRepository(Company::class)->findAll();
+        $users = $em->getRepository(User::class)->findUserHasNoCompany();
 
         return $this->render('company/index.html.twig', [
             'companies' => $companies,
+            'users' => $users
         ]);
     }
     #[Route('/companies', name: 'cond.company.all')]
@@ -67,4 +70,28 @@ final class CompanyController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('company.all');
     }
+    
+    #[Route('/admin/company/assign/{idCompany}', name: 'company.assign_manager', methods: ['POST'])]
+    public function assignManager(EntityManagerInterface $em, Request $request, int $idCompany): Response
+    {
+        $company = $em->getRepository(Company::class)->find($idCompany);
+    
+        if (!$company) {
+            throw $this->createNotFoundException('Company not found.');
+        }
+    
+        $responsableId = $request->request->get('responsable');
+        $responsable = $em->getRepository(User::class)->find($responsableId);
+    
+        if ($responsable) {
+            $company->setResponsable($responsable);
+            $responsable->setRoles(["ROLE_ENTERPRISE"]);
+            $em->persist($company);
+            $em->persist($responsable);
+            $em->flush();
+        }
+    
+        return $this->redirectToRoute('company.all');
+    }
+    
 }
