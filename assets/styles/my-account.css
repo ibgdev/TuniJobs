@@ -1,0 +1,305 @@
+/* My Account Page Styles */
+.account-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.account-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 1rem;
+}
+
+.account-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+}
+
+/* Profile Layout */
+.account-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+@media (max-width: 768px) {
+    .account-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Profile Card */
+.profile-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    position: relative;
+}
+
+.avatar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+    text-align: center;
+}
+
+.profile-info h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.profile-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-details li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    color: #555;
+}
+
+.profile-details li:last-child {
+    border-bottom: none;
+}
+
+.profile-details li span {
+    font-weight: 600;
+    color: #333;
+    margin-right: 0.5rem;
+}
+
+/* Account Status */
+.account-status {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.status-badge.verified {
+    background-color: #e1f5e9;
+    color: #0c6b39;
+}
+
+.status-badge.unverified {
+    background-color: #fff3cd;
+    color: #866000;
+}
+
+.status-message {
+    margin-top: 1rem;
+    color: #721c24;
+    font-size: 0.875rem;
+}
+
+/* Activity Section */
+.activity-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.activity-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+}
+
+.activity-card h3 {
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 1.25rem;
+}
+
+/* Reviews */
+.review-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.review-item {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.review-item h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.review-item p {
+    color: #666;
+    margin: 0;
+}
+
+/* Applications */
+.application-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.application-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.application-item .company {
+    font-weight: 600;
+}
+
+.status-indicator {
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.status-indicator.pending {
+    background-color: #e6f7ff;
+    color: #0066cc;
+}
+
+.status-indicator.approved {
+    background-color: #e1f5e9;
+    color: #0c6b39;
+}
+
+.status-indicator.rejected {
+    background-color: #fff1f0;
+    color: #cf1322;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 2rem 0;
+    color: #999;
+}
+
+/* Account Management */
+.account-management {
+    margin-top: 2rem;
+}
+
+.management-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+}
+
+.management-card h3 {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Password Form */
+.password-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4a89dc;
+    box-shadow: 0 0 0 3px rgba(74, 137, 220, 0.1);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.primary-btn {
+    background-color: #4a89dc;
+    color: white;
+}
+
+.primary-btn:hover {
+    background-color: #3b7dd8;
+}
+
+.danger-zone {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f0f0f0;
+}
+
+.danger-zone h4 {
+    color: #721c24;
+    margin-bottom: 1rem;
+}
+
+.danger-btn {
+    background-color: #fff;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+}
+
+.danger-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}

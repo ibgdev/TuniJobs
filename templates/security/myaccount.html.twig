@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Account{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/my-account.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    <div class="account-container">
+        <header class="account-header">
+            <h1>My Account</h1>
+        </header>
+
+        <div class="account-grid">
+            <!-- User Profile Card -->
+            <div class="profile-card">
+                <div class="avatar-container">
+                    {% if is_granted('ROLE_ENTERPRISE') %}
+                        <div class="avatar" style="background-image: url('{{ asset('images/avatar.png') }}')">
+                            <span class="visually-hidden">Enterprise User</span>
+                        </div>
+                    {% elseif is_granted('ROLE_ADMIN') %}
+                        <div class="avatar" style="background-image: url('{{ asset('images/admin.svg') }}')">
+                            <span class="visually-hidden">Admin User</span>
+                        </div>
+                    {% elseif is_granted('ROLE_CANDIDATE') %}
+                        <div class="avatar" style="background-image: url('{{ asset('images/boy.png') }}')">
+                            <span class="visually-hidden">Candidate User</span>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="profile-info">
+                    <h2>{{ user.nom }}</h2>
+                    <ul class="profile-details">
+                        <li><span>Email:</span> {{ user.email }}</li>
+                        <li><span>Role:</span> {{ user.roles | filter(role => role != 'ROLE_USER') | join(', ') }}</li>
+                        <li><span>Member since:</span> {{ user.CreatedAt|date('M d, Y') }}</li>
+                    </ul>
+                </div>
+
+                <!-- Account Status -->
+                <div class="account-status">
+                    {% if user.isVerified %}
+                        <span class="status-badge verified">Verified Account</span>
+                    {% else %}
+                        <span class="status-badge unverified">Unverified Account</span>
+                        <p class="status-message">Your account is deactivated. Please contact support to reactivate it.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- User Activity Section -->
+            <div class="activity-section">
+                {% if is_granted('ROLE_ENTERPRISE') %}
+                    <div class="activity-card reviews">
+                        <h3>Company Reviews</h3>
+                        {% if user.reviews is not empty %}
+                            <ul class="review-list">
+                                {% for review in user.reviews %}
+                                    <li class="review-item">
+                                        <h4>{{ review.title }}</h4>
+                                        <p>{{ review.comment }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <div class="empty-state">
+                                <p>No reviews available yet</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% if is_granted('ROLE_CANDIDATE') %}
+                    <div class="activity-card applications">
+                        <h3>Your Applications</h3>
+                        {% if user.applications is not empty %}
+                            <ul class="application-list">
+                                {% for application in user.applications %}
+                                    <li class="application-item">
+                                        <div class="company">{{ application.company.name }}</div>
+                                        <div class="status-indicator {{ application.status|lower }}">{{ application.status }}</div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <div class="empty-state">
+                                <p>No applications submitted yet</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Account Management Section -->
+        <div class="account-management">
+            <div class="management-card">
+                <h3>Security Settings</h3>
+                
+                <!-- Password Change Form -->
+                <form class="password-form" action="" method="post">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" name="currentPassword" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" name="newPassword" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Update Password</button>
+                </form>
+                
+                {% if user.isVerified %}
+                <div class="danger-zone">
+                    <h4>Danger Zone</h4>
+                    <form action="" method="post" onsubmit="return confirm('Are you sure you want to deactivate your account?');">
+                        <button type="submit" class="btn btn-danger">Deactivate Account</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
