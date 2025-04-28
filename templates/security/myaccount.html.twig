@@ -100,9 +100,15 @@
         <div class="account-management">
             <div class="management-card">
                 <h3>Security Settings</h3>
-                
+                {% for msg in app.flashes("message") %}
+                    <div class="alert alert-success">{{ msg }}</div>
+                {% endfor %}
+                {% for error in app.flashes("error") %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
                 <!-- Password Change Form -->
-                <form class="password-form" action="" method="post">
+                <form class="password-form" action="{{ path("password.reset") }}" method="post">
+                    <input type="text" hidden value="{{ user.id }}" id="id" name="id">
                     <div class="form-group">
                         <label for="currentPassword">Current Password</label>
                         <input type="password" id="currentPassword" name="currentPassword" required>
