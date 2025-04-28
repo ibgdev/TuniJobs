@@ -1,0 +1,187 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les Utilisateurs
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Content adjustments with sidebar */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 70px;
+                padding: 15px;
+            }
+        }
+
+        .company-header {
+            padding: 20px 0;
+        }
+
+        .company-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+
+        .company-table {
+            margin-bottom: 0;
+        }
+
+        .company-table thead th {
+            background-color: #f1f5f9;
+            border-bottom: 2px solid #dee2e6;
+            font-weight: 600;
+            padding: 15px 20px;
+        }
+
+        .company-table tbody td {
+            padding: 12px 20px;
+            vertical-align: middle;
+        }
+
+        .company-table tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .badge-role {
+            background-color: #4A0B6F;
+            color: white;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .btn-action {
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            margin: 0 4px;
+            transition: all 0.2s ease-in-out;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-add {
+            background-color: #4A0B6F;
+            color: #ffffff;
+            text-decoration: none;
+            border: 2px solid #ffffff;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add:hover {
+            background-color: #ffffff;
+            color: #4A0B6F;
+            border: 2px solid #ddd;
+        }
+
+        .empty-state {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            border: 2px dashed #ced4da;
+            margin-top: 40px;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            color: #adb5bd;
+            margin-bottom: 15px;
+        }
+
+        .action-buttons {
+            white-space: nowrap;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    {% include 'sidebar.html.twig' %}
+
+    <div class="main-content">
+        <div class="company-header d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="mb-1">Gestion des Utilisateurs</h1>
+                <p class="mb-0 opacity-75">Liste complète des utilisateurs enregistrés</p>
+            </div>
+            <a href="" class="btn-add">
+                <i class="fas fa-plus-circle"></i>
+                Ajouter
+            </a>
+        </div>
+        <hr>
+
+        {% if users|length > 0 %}
+            <div class="company-card mt-4">
+                <div class="table-responsive">
+                    <table class="company-table table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Roles</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td class="fw-semibold">{{ user.id }}</td>
+                                    <td>{{ user.nom }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        <span class="badge-role">
+                                            {{ user.roles | filter(role => role != 'ROLE_USER') | join(', ') }}
+                                        </span>
+                                    </td>
+                                    <td class="text-end action-buttons">
+                                        <a href="" class="btn btn-sm btn-action btn-outline-secondary">
+                                            <i class="fas fa-pencil-alt"></i>
+                                            Modifier
+                                        </a>
+                                        <a href="" class="btn btn-sm btn-action btn-outline-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">
+                                            <i class="fas fa-trash-alt"></i>
+                                            Supprimer
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h4 class="mb-3">Aucun utilisateur enregistré</h4>
+                <p class="text-muted mb-4">Commencez par ajouter votre premier utilisateur</p>
+                <a href="" class="btn btn-primary">
+                    <i class="fas fa-plus-circle me-2"></i>Ajouter un utilisateur
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+

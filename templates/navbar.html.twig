@@ -24,7 +24,7 @@
 			{% if is_granted('ROLE_ADMIN') %}
 				<a class="nav-link active" href="{{ path('company.all') }}" style="color: #4A0B6F" aria-current="page">Entreprises</a>
 				<a class="nav-link" href="{{ path('category.all') }}" style="color: #4A0B6F">Catégories</a>
-				<a class="nav-link" style="color: #4A0B6F">Utilisateurs</a>
+				<a class="nav-link"  style="color: #4A0B6F" href="{{ path('admin.users') }}">Utilisateurs</a>
 			{% endif %}
 
 			{% if is_granted('ROLE_CANDIDATE') %}

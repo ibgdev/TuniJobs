@@ -1,12 +1,76 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter une categorie
+{% block title %}Ajouter une catégorie{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Ensure the container for the form is centered and not pushed to the left by the sidebar */
+        .content-wrapper {
+            margin-left: 250px; /* Adjust the width for the sidebar */
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin-top: 30px;
+        }
+
+        .form-wrapper {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-wrapper h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+
+
+        /* Responsive design for small screens */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                margin-left: 0;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<h1>Ajouter une cateogie</h1>
-		{{ form(form) }}
-		</div>
-	{% endblock %}
-
+    {% include 'sidebar.html.twig' %}
+    <div class="content-wrapper">
+        <div class="container mt-5">
+            <div class="form-wrapper">
+                <h1>Ajouter une catégorie</h1>
+                {{ form_start(form) }}
+                    <div class="form-group">
+                        {{ form_label(form.nom, 'Nom de la catégorie', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.nom) }}
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-save" style="background-color: #4A0B6F; color: white">Enregistrer</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,17 +1,280 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Dashboard | Admin{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* General styles */
+        .content-wrapperr {
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+            margin-left: 250px;
+            min-height: calc(100vh - 60px);
+        }
+
+        .dashboard-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4A0B6F;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .dashboard-header h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #4A0B6F;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            gap: 50px;
+        }
+
+        .dashboard-card {
+            flex: 1;
+            min-width: 250px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            padding: 25px;
+            border-left: 5px solid #4A0B6F;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .dashboard-card h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4A0B6F;
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-box .stat-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #4A0B6F;
+        }
+
+        .stat-box .stat-label {
+            font-size: 1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .recent-activities {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .recent-activities h4 {
+            color: #4A0B6F;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .activity-item {
+            padding: 15px 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            border-left: 3px solid #4A0B6F;
+            transition: transform 0.2s;
+        }
+
+        .activity-item:hover {
+            transform: translateX(5px);
+        }
+
+        .activity-item strong {
+            color: #4A0B6F;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .activity-item p {
+            font-size: 0.95rem;
+            color: #495057;
+            margin: 0;
+        }
+
+        .actions-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-primary-custom {
+            background-color: #4A0B6F;
+            color: white;
+            border-radius: 8px;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #4A0B6F;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #ffffff;
+            color: #4A0B6F;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(74, 11, 111, 0.2);
+        }
+
+        /* Sidebar style */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #f8f9fa;
+            border-right: 2px solid #ddd;
+            padding-top: 20px;
+            padding-right: 15px;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .stats-row {
+                flex-direction: column;
+            }
+            
+            .dashboard-card {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .content-wrapper {
+                margin-left: 200px;
+                padding: 20px 15px;
+            }
+            
+            .dashboard-container {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content-wrapper {
+                padding: 15px 10px;
+            }
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-{% include 'navbar.html.twig' %}
+    <div class="main_content">
+        <!-- Sidebar -->
+        {% include 'sidebar.html.twig' %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <!-- Main Content -->
+        <div class="content-wrapperr">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1>Admin Dashboard</h1>
+                </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/ibgdev/symfony/TuniJobs/src/Controller/AdminController.php</code></li>
-        <li>Your template at <code>/home/ibgdev/symfony/TuniJobs/templates/admin/index.html.twig</code></li>
-    </ul>
-</div>
+                <!-- Stats Cards -->
+                <div class="stats-row">
+                    <div class="dashboard-card">
+                        <h4>Total Entreprises</h4>
+                        <div class="stat-box">
+                            <span class="stat-value">150</span>
+                            <span class="stat-label">Entreprises</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h4>Utilisateurs Enregistrés</h4>
+                        <div class="stat-box">
+                            <span class="stat-value">80</span>
+                            <span class="stat-label">Utilisateurs</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h4>Offres d'Emploi</h4>
+                        <div class="stat-box">
+                            <span class="stat-value">35</span>
+                            <span class="stat-label">Offres</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="recent-activities">
+                    <h4>Activités Récentes</h4>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <strong>Nouvelle entreprise ajoutée</strong>
+                            <p>Entreprise XYZ a été ajoutée le 25 avril 2025.</p>
+                        </div>
+                        <div class="activity-item">
+                            <strong>Utilisateur inscrit</strong>
+                            <p>John Doe a créé un compte le 24 avril 2025.</p>
+                        </div>
+                        <div class="activity-item">
+                            <strong>Offre d'emploi ajoutée</strong>
+                            <p>Une nouvelle offre d'emploi pour un Développeur Web a été publiée le 23 avril 2025.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
