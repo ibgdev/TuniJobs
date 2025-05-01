@@ -122,10 +122,6 @@
                 <h1 class="mb-1">Gestion des Utilisateurs</h1>
                 <p class="mb-0 opacity-75">Liste complète des utilisateurs enregistrés</p>
             </div>
-            <a href="" class="btn-add">
-                <i class="fas fa-plus-circle"></i>
-                Ajouter
-            </a>
         </div>
         <hr>
 
@@ -154,11 +150,11 @@
                                         </span>
                                     </td>
                                     <td class="text-end action-buttons">
-                                        <a href="" class="btn btn-sm btn-action btn-outline-secondary">
+                                        <a href="{{ path("admin.users.edit", {id: user.id}) }}" class="btn btn-sm btn-action btn-outline-secondary">
                                             <i class="fas fa-pencil-alt"></i>
                                             Modifier
                                         </a>
-                                        <a href="" class="btn btn-sm btn-action btn-outline-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">
+                                        <a href="{{ path("admin.users.delete", {id: user.id}) }}" class="btn btn-sm btn-action btn-outline-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">
                                             <i class="fas fa-trash-alt"></i>
                                             Supprimer
                                         </a>

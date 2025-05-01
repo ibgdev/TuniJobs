@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -25,5 +27,34 @@ final class AdminController extends AbstractController
         return $this->render('admin/users/index.html.twig', [
             'users' => $users
         ]);
+    }
+    #[Route('/admin/users/edit/{id}', name:'admin.users.edit')]
+    public function users_edit(EntityManagerInterface $em, Request $request, User $user): Response
+    {
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $roles = $user->getRoles();
+            if (!in_array('ROLE_ENTERPRISE', $roles)) {
+                $user->setCompany(null);
+            }else{
+                $user->setRoles(['ROLE_ENTERPRISE']);
+            }
+
+            $this->addFlash('success', 'User added successfuly');
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('admin.users');
+        }
+        return $this->render('admin/users/edit.html.twig', [
+            'form' => $form
+        ]);
+    }
+    #[Route('/admin/users/delete/{id}', name:'admin.users.delete')]
+    public function users_delete(EntityManagerInterface $em, Request $request, User $user): Response
+    {
+        $em->remove($user);
+        $em->flush();
+        return $this->redirectToRoute('admin.users');
     }
 }

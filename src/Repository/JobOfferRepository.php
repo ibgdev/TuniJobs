@@ -30,6 +30,13 @@ class JobOfferRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findAllRecent(): array{
+        return $this->createQueryBuilder('j')
+        ->orderBy("j.datePublication","desc")
+        ->getQuery()
+        ->getResult();
+    }
+
 //    public function findOneBySomeField($value): ?JobOffer
 //    {
 //        return $this->createQueryBuilder('j')

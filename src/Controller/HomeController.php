@@ -22,7 +22,7 @@ final class HomeController extends AbstractController
                 return $this->redirectToRoute('main.entreprise');
             }
         }
-        $offers = $em->getRepository(JobOffer::class)->findAll();
+        $offers = $em->getRepository(JobOffer::class)->findAllRecent();
         $categories = $em->getRepository(Category::class)->findAll();
         return $this->render('home/index.html.twig', [
         'featuredJobs' => $offers,
