@@ -39,8 +39,8 @@ final class CompanyController extends AbstractController
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Company added successfuly');
             $em->persist($company);
+            $this->addFlash('success', 'Company added successfuly');
             $em->flush();
             return $this->redirectToRoute("company.all");
         }
@@ -54,7 +54,7 @@ final class CompanyController extends AbstractController
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Company added successfuly');
+            $this->addFlash('success', 'Company updated successfuly');
             $em->persist($company);
             $em->flush();
             return $this->redirectToRoute("company.all");
@@ -66,6 +66,7 @@ final class CompanyController extends AbstractController
     #[Route('/admin/company/delete/{id}', name: 'company.delete')]
     public function delete( EntityManagerInterface $em, Company $company): Response
     {
+        $this->addFlash('success', 'Company deleted successfuly');
         $em->remove($company);
         $em->flush();
         return $this->redirectToRoute('company.all');

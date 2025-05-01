@@ -27,6 +27,7 @@ final class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Category added successfuly');
             $em->persist($category);
             $em->flush();
             return $this->redirectToRoute('category.all');
@@ -41,6 +42,7 @@ final class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Category updated successfuly');
             $em->persist($category);
             $em->flush();
             return $this->redirectToRoute('category.all');
@@ -53,6 +55,7 @@ final class CategoryController extends AbstractController
     public function delete( EntityManagerInterface $em, Category $category): Response
     {
         $em->remove($category);
+        $this->addFlash('success', 'Category deleted successfuly');
         $em->flush();
         return $this->redirectToRoute('category.all');
     }

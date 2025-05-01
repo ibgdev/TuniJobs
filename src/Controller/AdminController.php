@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\JobOffer;
 use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -54,7 +55,26 @@ final class AdminController extends AbstractController
     public function users_delete(EntityManagerInterface $em, Request $request, User $user): Response
     {
         $em->remove($user);
+        $this->addFlash('success', 'User deleted successfuly');
         $em->flush();
         return $this->redirectToRoute('admin.users');
+    }
+
+    #[Route('/admin/jobs', name:'admin.jobs')]
+    public function jobs_all(EntityManagerInterface $em): Response
+    {
+        $jobOffers = $em->getRepository(JobOffer::class)->findAll();
+        return $this->render('/admin/jobs/index.html.twig',[
+            "jobOffers" => $jobOffers
+        ]);
+    }
+
+    #[Route('/admin/jobs/delete/{id}', name:'admin.jobs.delete')]
+    public function jobs_delete(EntityManagerInterface $em, JobOffer $job): Response
+    {
+        $em->remove($job);
+        $this->addFlash('success', 'job Offer deleted successfuly');
+        $em->flush();
+        return $this->redirectToRoute('admin.jobs');
     }
 }
