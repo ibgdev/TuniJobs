@@ -70,7 +70,7 @@
                         
                         <div class="card-body">
                             <p class="job-description">
-                                {{ jobOffer.description|length > 200 ? jobOffer.description|slice(0, 200) ~ '...' : jobOffer.description }}
+                                {{ jobOffer.description|length > 200 ? jobOffer.description|slice(0, 50) ~ '...' : jobOffer.description }}
                             </p>
                             
                             <div class="job-meta">
@@ -82,7 +82,7 @@
                         </div>
                         
                         <div class="card-footer">
-                            <a href="" class="btn btn-outline">
+                            <a href="{{ path("job.details", {id: jobOffer.id}) }}" class="btn btn-outline">
                                 <i class="fas fa-eye"></i> Détails
                             </a>
                             <form method="post" action="">

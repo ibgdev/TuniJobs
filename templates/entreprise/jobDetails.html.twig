@@ -1,0 +1,270 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Offre d'emploi -
+	{{ joboffer.titre }}
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<style>
+	/* Enhanced Styling for Job Offer Details */:root
+	{
+		--primary: #4A0B6F;
+		--primary-light: #6c1d91;
+		--primary-dark: #2c0745;
+		--accent: #ac56d8;
+		--gray-light: #f8f9fa;
+		--gray-medium: #e9ecef;
+		--text-dark: #212529;
+		--text-muted: #6c757d;
+	}
+
+	body {
+		background-color: var(--gray-light);
+		font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+	}
+
+	.job-offer-containerr {
+        width: 100%;
+		padding: 30px;
+		max-width: 900px;
+	}
+
+	.job-offer-card {
+		background-color: white;
+		border-radius: 15px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+		padding: 40px;
+		margin-bottom: 30px;
+		border-top: 5px solid var(--primary);
+	}
+
+	.job-offer-header {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		margin-bottom: 30px;
+		border-bottom: 1px solid var(--gray-medium);
+		padding-bottom: 20px;
+	}
+
+	.job-offer-header h1 {
+		font-size: 2rem;
+		font-weight: 700;
+		color: var(--primary);
+		margin-bottom: 15px;
+		width: 100%;
+	}
+
+	.job-offer-meta {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+		gap: 20px;
+		width: 100%;
+		margin-top: 10px;
+	}
+
+	.meta-item {
+		display: flex;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+
+	.meta-item i {
+		color: var(--primary);
+		margin-right: 10px;
+		font-size: 16px;
+		width: 20px;
+		text-align: center;
+	}
+
+	.job-section {
+		margin-bottom: 30px;
+		padding-bottom: 20px;
+		border-bottom: 1px solid var(--gray-medium);
+	}
+
+	.job-section:last-child {
+		border-bottom: none;
+	}
+
+	.section-title {
+		font-size: 1.5rem;
+		color: var(--primary);
+		margin-bottom: 15px;
+		display: flex;
+		align-items: center;
+	}
+
+	.section-title i {
+		margin-right: 12px;
+	}
+
+	.job-description {
+		line-height: 1.7;
+		color: var(--text-dark);
+		font-size: 1rem;
+		text-align: justify;
+	}
+
+	.salary-highlight {
+		background-color: rgba(74, 11, 111, 0.08);
+		padding: 15px 20px;
+		border-radius: 10px;
+		display: inline-flex;
+		align-items: center;
+		font-weight: 600;
+		color: var(--primary);
+		font-size: 1.1rem;
+	}
+
+	.salary-highlight i {
+		margin-right: 12px;
+		font-size: 1.2rem;
+	}
+
+	.action-container {
+		display: flex;
+		justify-content: center;
+		margin-top: 40px;
+	}
+
+	.apply-btn {
+		background-color: var(--primary);
+		color: white;
+		border: none;
+		padding: 14px 32px;
+		font-size: 1.1rem;
+		border-radius: 50px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		display: inline-flex;
+		align-items: center;
+		font-weight: 600;
+		text-decoration: none;
+		box-shadow: 0 5px 15px rgba(74, 11, 111, 0.3);
+	}
+
+	.apply-btn:hover {
+		background-color: var(--primary-dark);
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(74, 11, 111, 0.4);
+	}
+
+	.apply-btn i {
+		margin-right: 10px;
+		font-size: 1.1rem;
+	}
+
+    .back-to-home {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    width: 40px; /* Taille du cercle */
+    height: 40px; /* Taille du cercle */
+    background-color: #4A0B6F;
+    color: white;
+    text-decoration: none;
+    border-radius: 50%; /* Transforme en cercle */
+    font-weight: 500;
+    display: flex;
+    justify-content: center; /* Centrer le texte/icon */
+    align-items: center; /* Centrer le texte/icon */
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.back-to-home:hover {
+    background-color: #2c0745;
+}
+
+	@media(max-width: 768px) {
+		.job-offer-containerr {
+			margin-left: 0;
+			padding: 15px;
+		}
+
+		.job-offer-card {
+			padding: 25px;
+		}
+
+		.job-offer-header {
+			flex-direction: column;
+		}
+	}
+</style>{% endblock %}{% block body %}
+{% include 'navbar.html.twig' %}
+<a href="{{ path('job.entreprise') }}" class="back-to-home">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" width="24" height="24">
+        <path fill="none" d="M0 0h24v24H0z"/>
+        <path d="M19 12H5M5 12l7-7M5 12l7 7" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+</a>
+<div class="container d-flex justify-content-center">
+	<div class="job-offer-containerr">
+		<div class="job-offer-card">
+			<div class="job-offer-header">
+				<h1>{{ joboffer.titre }}</h1>
+
+				<div class="job-offer-meta">
+					<div class="meta-item">
+						<i class="fas fa-building"></i>
+						<span>
+							<strong>Entreprise:</strong>
+							{{ joboffer.entreprise.nom }}</span>
+					</div>
+
+					<div class="meta-item">
+						<i class="fas fa-tag"></i>
+						<span>
+							<strong>Catégorie:</strong>
+							{{ joboffer.categorie.nom }}</span>
+					</div>
+
+					<div class="meta-item">
+						<i class="fas fa-map-marker-alt"></i>
+						<span>
+							<strong>Lieu:</strong>
+							{{ joboffer.location }}</span>
+					</div>
+
+					<div class="meta-item">
+						<i class="far fa-calendar-alt"></i>
+						<span>
+							<strong>Publié le:</strong>
+							{{ joboffer.datePublication|date('d/m/Y') }}</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="job-section">
+				<h3 class="section-title">
+					<i class="fas fa-clipboard-list"></i>
+					Description du poste
+				</h3>
+				<div class="job-description">
+					{{ joboffer.description }}
+				</div>
+			</div>
+
+			<div class="job-section">
+				<h3 class="section-title">
+					<i class="fas fa-money-bill-wave"></i>
+					Rémunération
+				</h3>
+				<div class="salary-highlight">
+					<i class="fas fa-hand-holding-dollar"></i>
+					{{ joboffer.salaire|number_format(2, ',', ' ') }}
+					TND par mois
+				</div>
+			</div>
+
+			<div class="action-container">
+				<a class="apply-btn" disabled>
+					<i class="fas fa-paper-plane"></i>
+					Postuler maintenant
+				</a>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

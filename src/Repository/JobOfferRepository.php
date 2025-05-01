@@ -24,7 +24,7 @@ class JobOfferRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('j')
             ->andWhere('j.entreprise = :val')
             ->setParameter('val', $value)
-            ->orderBy('j.id', 'ASC')
+            ->orderBy('j.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
@@ -33,6 +33,7 @@ class JobOfferRepository extends ServiceEntityRepository
     public function findAllRecent(): array{
         return $this->createQueryBuilder('j')
         ->orderBy("j.datePublication","desc")
+        ->setMaxResults(4)
         ->getQuery()
         ->getResult();
     }

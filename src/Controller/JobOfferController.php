@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class JobOfferController extends AbstractController
 {
+    // jobs for condidatee 
+
     #[Route('/jobs', name: 'job.all')]
     public function index(EntityManagerInterface $em): Response
     {
@@ -24,6 +26,17 @@ final class JobOfferController extends AbstractController
             'categories' => $em->getRepository(Category::class)->findAll(),
         ]);
     }
+    #[Route('/jobs/details/{id}', name: 'job.details')]
+    public function details(EntityManagerInterface $em, JobOffer $jobOffer): Response
+    {
+        return $this->render('condidate/jobDetails.html.twig', [
+            'joboffer' => $jobOffer
+        ]);
+    }
+
+
+
+    // Jobs for entrepprise
     #[Route('/entreprise/jobs', name: 'job.entreprise')]
     public function entreprise_jobs(EntityManagerInterface $em): Response
     {
@@ -83,6 +96,14 @@ final class JobOfferController extends AbstractController
         $em->remove($jobOffer);
         $em->flush();
         return $this->redirectToRoute('job.entreprise');
+    }
+
+    #[Route('/entreprise/jobs/preview/{id}', name: 'job.entreprise.preview')]
+    public function details_entreprise(EntityManagerInterface $em, JobOffer $jobOffer): Response
+    {
+        return $this->render('entreprise/jobDetails.html.twig', [
+            'joboffer' => $jobOffer
+        ]);
     }
 
     public function getTunisianGovernorates(): array

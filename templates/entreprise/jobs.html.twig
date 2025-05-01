@@ -43,7 +43,7 @@
                         
                         <div class="card-body">
                             <p class="job-description">
-                                {{ jobOffer.description|length > 200 ? jobOffer.description|slice(0, 200) ~ '...' : jobOffer.description }}
+                                {{ jobOffer.description|length > 200 ? jobOffer.description|slice(0, 50) ~ '...' : jobOffer.description }}
                             </p>
                             
                             <div class="job-meta">
@@ -55,8 +55,8 @@
                         </div>
                         
                         <div class="card-footer">
-                            <a href="" class="btn btn-outline">
-                                <i class="fas fa-eye"></i> détails
+                            <a href="{{ path("job.entreprise.preview", {id: jobOffer.id}) }}" class="btn btn-outline">
+                                <i class="fas fa-eye"></i> Preview
                             </a>
                             <div class="action-buttons">
                                 <a href="{{ path('job.entreprise.edit',{'id': jobOffer.id}) }}" class="btn btn-edit">

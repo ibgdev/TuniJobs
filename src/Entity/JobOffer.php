@@ -18,7 +18,7 @@ class JobOffer
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: "text")]
     private ?string $description = null;
 
     #[ORM\Column]
