@@ -32,16 +32,6 @@
     border-radius: 10px;
 }
 
-.logout {
-    background-color: var(--primary-color);
-    color: var(--white);
-}
-
-.logout:hover {
-    background-color: var(--primary-dark);
-    color: var(--white);
-}
-
 .dropdown-item {
     border-radius: 5px;
     height: 120%;
