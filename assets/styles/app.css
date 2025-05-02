@@ -8,3 +8,18 @@
 a{
     text-decoration: none;
 }
+
+:root {
+    --primary-color: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary-color: #3f37c9;
+    --accent-color: #4895ef;
+    --text-color: #2b2d42;
+    --text-light: #8d99ae;
+    --background-light: #f8f9fa;
+    --white: #ffffff;
+    --error-color: #ef233c;
+    --success-color: #4cc9f0;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}

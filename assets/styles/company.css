@@ -3,7 +3,6 @@ body {
     background-color: #f8fafc;
     color: #1e293b;
     transition: background-color 0.3s ease, color 0.3s ease;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.6;
 }
 

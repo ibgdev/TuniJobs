@@ -141,7 +141,7 @@
                             {% for jobOffer in jobOffers %}
                                 <tr>
                                     <td class="fw-semibold">{{ jobOffer.titre }}</td>
-                                    <td>{{ jobOffer.description }}</td>
+                                    <td>{{ jobOffer.description|length > 200 ? jobOffer.description|slice(0, 50) ~ '...' : jobOffer.description  }}</td>
                                     <td>{{ jobOffer.salaire | number_format(2, ',', ' ') }} TND</td>
                                     <td>{{ jobOffer.entreprise.nom }}</td>
                                     <td>{{ jobOffer.categorie.nom }}</td>

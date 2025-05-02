@@ -1,91 +1,86 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	{% block stylesheets %}
-		<link rel="stylesheet" href="{{ asset('styles/nav.css') }}">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-	{% endblock %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('styles/nav.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    {% endblock %}
 
-	<nav class="nav d-flex justify-content-between p-3 shadow-sm">
-		<div class="nav-logo" style="width: clamp(7%,40vw,100px); height: 8%;">
-			<a href="{{ path("app_home") }}">
-				<img src="{{ asset('images/tunijobs logo.png') }}" alt="Logo TuniJobs" style="width:100%; height:100%;">
-			</a>
-		</div>
+    <nav class="nav d-flex justify-content-between p-3 shadow-sm">
+        <div class="nav-logo" style="width: clamp(7%,40vw,100px); height: 8%;">
+            <a href="{{ path("app_home") }}">
+                <img src="{{ asset('images/tunijobs logo.png') }}" alt="Logo TuniJobs" style="width:100%; height:100%;">
+            </a>
+        </div>
 
-		<div class="nav-links d-flex justify-content-center align-items-center">
-			{% if is_granted('ROLE_ENTERPRISE') %}
-				<a class="nav-link active" href="{{ path('job.entreprise') }}" style="color: #4A0B6F" aria-current="page">Mes Offres</a>
-				<a class="nav-link" href="{{ path('category.all') }}" style="color: #4A0B6F">Candidatures</a>
-				<a class="nav-link" href="#" style="color: #4A0B6F">Tests</a>
-			{% endif %}
+        <div class="nav-links d-flex justify-content-center align-items-center">
+            {% if is_granted('ROLE_ENTERPRISE') %}
+                <a class="nav-link active" href="{{ path('job.entreprise') }}" style="color: var(--primary-color);" aria-current="page">Mes Offres</a>
+                <a class="nav-link" href="{{ path('category.all') }}" style="color: var(--primary-color);">Candidatures</a>
+                <a class="nav-link" href="#" style="color: var(--primary-color);">Tests</a>
+            {% endif %}
 
-			{% if is_granted('ROLE_CANDIDATE') %}
-				<a class="nav-link" style="color: #4A0B6F" href="{{ path('job.all') }}">Trouver un emploi</a>
-				<a class="nav-link" style="color: #4A0B6F" href="{{ path('cond.company.all') }}">Entreprises</a>
-				<a class="nav-link" style="color: #4A0B6F">Mes candidatures</a>
-			{% endif %}
+            {% if is_granted('ROLE_CANDIDATE') %}
+                <a class="nav-link" style="color: var(--primary-color);" href="{{ path('job.all') }}">Trouver un emploi</a>
+                <a class="nav-link" style="color: var(--primary-color);" href="{{ path('cond.company.all') }}">Entreprises</a>
+                <a class="nav-link" style="color: var(--primary-color);">Mes candidatures</a>
+            {% endif %}
 
-			{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-				<a class="nav-link" style="color: #4A0B6F" href="{{ path('job.all') }}">Trouver un emploi</a>
-				<a class="nav-link" style="color: #4A0B6F" href="{{ path('cond.company.all')}}">Entreprises</a>
-			{% endif %}
-		</div>
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="nav-link" style="color: var(--primary-color);" href="{{ path('job.all') }}">Trouver un emploi</a>
+                <a class="nav-link" style="color: var(--primary-color);" href="{{ path('cond.company.all')}}">Entreprises</a>
+            {% endif %}
+        </div>
 
-		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-			<div
-				class="dropdown ps-5 mt-1">
-				<!-- Avatar as a button -->
-				{% if is_granted('ROLE_ENTERPRISE') %}
-					<button class="btn rounded-circle p-0" type="button" id="userAvatar" data-bs-toggle="dropdown" aria-expanded="false" style="background-image: url('{{ asset('images/avatar.png' ) }}'); width: 40px; height: 40px; background-size: cover; background-position: center; background-color: white;">
-						<span class="visually-hidden">User Avatar</span>
-					</button>
-				{% endif %}
-				{% if is_granted('ROLE_ADMIN') %}
-					<button class="btn rounded-circle p-0" type="button" id="userAvatar" data-bs-toggle="dropdown" aria-expanded="false" style="background-image: url('{{ asset('images/admin.svg' ) }}'); width: 40px; height: 40px; background-size: cover; background-position: center; background-color: white;">
-						<span class="visually-hidden">User Avatar</span>
-					</button>
-				{% endif %}
-				{% if is_granted('ROLE_CANDIDATE') %}
-					<button class="btn rounded-circle p-0" type="button" id="userAvatar" data-bs-toggle="dropdown" aria-expanded="false" style="background-image: url('{{ asset('images/boy.png' ) }}'); width: 40px; height: 40px; background-size: cover; background-position: center; background-color: white;">
-						<span class="visually-hidden">User Avatar</span>
-					</button>
-				{% endif %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="dropdown ps-5 mt-1">
+                {% if is_granted('ROLE_ENTERPRISE') %}
+                    <button class="btn rounded-circle p-0" type="button" id="userAvatar" data-bs-toggle="dropdown" aria-expanded="false" style="background-image: url('{{ asset('images/avatar.png' ) }}'); width: 40px; height: 40px; background-size: cover; background-position: center; background-color: var(--white);">
+                        <span class="visually-hidden">User Avatar</span>
+                    </button>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <button class="btn rounded-circle p-0" type="button" id="userAvatar" data-bs-toggle="dropdown" aria-expanded="false" style="background-image: url('{{ asset('images/admin.svg' ) }}'); width: 40px; height: 40px; background-size: cover; background-position: center; background-color: var(--white);">
+                        <span class="visually-hidden">User Avatar</span>
+                    </button>
+                {% endif %}
+                {% if is_granted('ROLE_CANDIDATE') %}
+                    <button class="btn rounded-circle p-0" type="button" id="userAvatar" data-bs-toggle="dropdown" aria-expanded="false" style="background-image: url('{{ asset('images/boy.png' ) }}'); width: 40px; height: 40px; background-size: cover; background-position: center; background-color: var(--white);">
+                        <span class="visually-hidden">User Avatar</span>
+                    </button>
+                {% endif %}
 
-				<!-- Dropdown menu -->
-				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userAvatar">
-					<li>
-						<a href="{{ path("app_account") }}">
-							<span class="dropdown-item">
-								<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960" width="24px" fill="#4A0B6F"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg>
-								{{ app.user.nom }}!
-							</span>
-						</a>
-					</li>
-					<li>
-						<a
-							class="dropdown-item logout" href="{{ path('app_logout') }}" style="background-color: #4A0B6F; color: white;">
-							<!-- Custom Logout Icon (SVG) -->
-							<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960" width="24px" fill="#e3e3e3">
-								<path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/>
-							</svg>
-							Déconnexion
-						</a>
-					</li>
-				</ul>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userAvatar">
+                    <li>
+                        <a href="{{ path("app_account") }}">
+                            <span class="dropdown-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--primary-color)">
+                                    <path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/>
+                                </svg>
+                                {{ app.user.nom }}!
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item logout" href="{{ path('app_logout') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--white)">
+                                <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/>
+                            </svg>
+                            Déconnexion
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        {% else %}
+            <div class="d-flex justify-content-center align-items-center gap-2">
+                <a class="btn" style="background-color: var(--white); color: var(--primary-color); border: 1px solid var(--primary-color);" href="{{ path('app_login') }}">Connexion</a>
+                <a class="btn btn-dark" style="background-color: var(--primary-color); color: var(--white);" href="{{ path('app_register') }}">Inscription</a>
+            </div>
+        {% endif %}
+    </nav>
 
-			</div>
-		{% else %}
-			<div class="d-flex justify-content-center align-items-center gap-2">
-				<a class="btn" style="background-color: white; color: #4A0B6F; border: 1px solid #4A0B6F;" href="{{ path('app_login') }}">Connexion</a>
-				<a class="btn btn-dark" style="background-color: #4A0B6F; color: white;" href="{{ path('app_register') }}">Inscription</a>
-			</div>
-		{% endif %}
-	</nav>
-
-	{% block javascripts %}
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-	{% endblock %}
+    {% block javascripts %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    {% endblock %}
 {% endblock %}
-

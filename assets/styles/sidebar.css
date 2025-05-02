@@ -1,16 +1,31 @@
+:root {
+    --primary-color: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary-color: #3f37c9;
+    --accent-color: #4895ef;
+    --text-color: #2b2d42;
+    --text-light: #8d99ae;
+    --background-light: #f8f9fa;
+    --white: #ffffff;
+    --error-color: #ef233c;
+    --success-color: #4cc9f0;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     width: 250px;
     height: 100vh;
-    background-color: #220533;
-    color: #ffffff;
+    background-color: var(--primary-color);
+    color: var(--white);
     display: flex;
     flex-direction: column;
     z-index: 1030;
     padding-top: 20px;
-    transition: all 0.3s ease;
+    transition: var(--transition);
 }
 
 .sidebar-header {
@@ -27,7 +42,7 @@
 }
 
 .sidebar-link {
-    color: #ffffff;
+    color: var(--white);
     display: flex;
     align-items: center;
     gap: 10px;
@@ -35,12 +50,12 @@
     padding: 8px 12px;
     border-radius: 8px;
     text-decoration: none;
-    transition: background-color 0.2s, color 0.2s;
+    transition: var(--transition);
 }
 
 .sidebar-link:hover {
-    background-color: #61318a;
-    color: #ffffff;
+    background-color: var(--primary-dark);
+    color: var(--white);
 }
 
 /* Bottom Profile & Logout links */
@@ -53,7 +68,8 @@
 }
 
 .logout-link:hover {
-    background-color: #ff4b5c;
+    background-color: var(--error-color);
+    color: var(--white);
 }
 
 /* Responsive */

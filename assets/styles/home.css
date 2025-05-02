@@ -1,9 +1,9 @@
 /* Base Styles */
 
 :root {
-    --primary-color: #7e22ce;
-    --primary-light: #a855f7;
-    --primary-dark: #4A0B6F;
+    --primary-color: #4361ee;
+    --primary-light: #6e86f1;
+    --primary-dark: #3a56d4;
     --secondary-color: #10b981;
     --secondary-light: #34d399;
     --secondary-dark: #059669;
@@ -19,7 +19,6 @@
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     color: var(--text-color);
     background-color: var(--bg-color);
     line-height: 1.6;

@@ -17,7 +17,6 @@
   
   body {
     background-color: var(--bg-color);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-primary);
     transition: background-color var(--transition-speed) ease;
 

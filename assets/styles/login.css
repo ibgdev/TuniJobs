@@ -2,11 +2,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .body {
-    background: linear-gradient(135deg, #f5f5f5, #ecd9fc);
+    background: linear-gradient(135deg, #ecefff, #cbd5ff);
     color: #333;
     min-height: 100vh;
     display: flex;
@@ -28,7 +27,7 @@
 .blob-1 {
     width: 200px;
     height: 200px;
-    background-color: #60a5fa;
+    background-color: #0073ff;
     top: 20%;
     left: 10%;
 }
@@ -36,7 +35,7 @@
 .blob-2 {
     width: 300px;
     height: 300px;
-    background-color: #9333ea;
+    background-color: #42b3ff;
     bottom: 15%;
     right: 10%;
     animation-delay: 3s;
@@ -45,7 +44,7 @@
 .blob-3 {
     width: 150px;
     height: 150px;
-    background-color: #ec4899;
+    background-color: #eb35f1;
     top: 60%;
     left: 30%;
     animation-delay: 6s;

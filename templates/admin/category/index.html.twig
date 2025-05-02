@@ -1,12 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Toutes les Catégories
-{% endblock %}
+{% block title %}Toutes les Catégories{% endblock %}
 
 {% block stylesheets %}
 	{{ parent() }}
 	<style>
-		/* General container to not hide behind sidebar */
 		.main-content {
 			margin-left: 250px;
 			padding: 20px;
@@ -15,7 +13,7 @@
 
 		@media(max-width: 768px) {
 			.main-content {
-				margin-left: 70px; /* adapt when sidebar is collapsed */
+				margin-left: 70px;
 				padding: 15px;
 			}
 		}
@@ -25,13 +23,13 @@
 		}
 
 		.company-card {
-			border: 1px solid #e2e8f0;
+			border: 1px solid var(--gray-light);
 			border-radius: 10px;
 			overflow: hidden;
-			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+			box-shadow: var(--shadow);
 			transition: transform 0.3s ease, box-shadow 0.3s ease;
 			margin-bottom: 20px;
-			background-color: white;
+			background-color: var(--white);
 		}
 
 		.company-table {
@@ -39,8 +37,8 @@
 		}
 
 		.company-table thead th {
-			background-color: #f1f5f9;
-			border-bottom: 2px solid #dee2e6;
+			background-color: var(--background-light);
+			border-bottom: 2px solid var(--gray-dark);
 			font-weight: 600;
 			padding: 15px 20px;
 		}
@@ -51,7 +49,7 @@
 		}
 
 		.company-table tbody tr:hover {
-			background-color: #f9fafb;
+			background-color: var(--background-light);
 		}
 
 		.btn-action {
@@ -66,10 +64,10 @@
 		}
 
 		.btn-add {
-			background-color: #4A0B6F;
-			color: #ffffff;
+			background-color: var(--primary-dark);
+			color: var(--white);
 			text-decoration: none;
-			border: 2px solid #ffffff;
+			border: 2px solid var(--white);
 			border-radius: 8px;
 			padding: 8px 16px;
 			font-weight: 600;
@@ -77,23 +75,23 @@
 		}
 
 		.btn-add:hover {
-			background-color: #ffffff;
-			color: #4A0B6F;
-			border: 2px solid #ddd;
+			background-color: var(--white);
+			color: var(--primary-dark);
+			border: 2px solid var(--gray-dark);
 		}
 
 		.empty-state {
-			background-color: #f8f9fa;
+			background-color: var(--background-light);
 			border-radius: 10px;
 			padding: 40px;
 			text-align: center;
-			border: 2px dashed #ced4da;
+			border: 2px dashed var(--gray-light);
 			margin-top: 40px;
 		}
 
 		.empty-state-icon {
 			font-size: 3rem;
-			color: #adb5bd;
+			color: var(--gray-dark);
 			margin-bottom: 15px;
 		}
 
@@ -108,7 +106,7 @@
 	<div class="main-content">
 		<div class="company-header d-flex justify-content-between align-items-center">
 			<div>
-				<h1 class="mb-1">Gestion des Catégories</h1>
+				<h1 class="mb-1" style="color: var(--text-color)">Gestion des Catégories</h1>
 				<p class="mb-0 opacity-75">Liste complète des catégories disponibles</p>
 			</div>
 			<a href="{{ path('category.add') }}" class="btn-add">
