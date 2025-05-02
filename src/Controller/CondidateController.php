@@ -2,17 +2,22 @@
 
 namespace App\Controller;
 
+use App\Entity\Company;
+use App\Entity\JobOffer;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class CondidateController extends AbstractController
 {
-    #[Route('/condidate', name: 'main.condidate')]
-    public function index(): Response
-    {
-        return $this->render('condidate/index.html.twig', [
-            'controller_name' => 'CondidateController',
+    #[Route('/companies/{id}', name: 'condidate.entreprise')]
+    public function index(Company $company, EntityManagerInterface $em): Response
+    {   
+        $offers = $em->getRepository(JobOffer::class)->findByCompanyId($company->getId());
+        return $this->render('condidate/detailsEntreprise.html.twig', [
+            'company' => $company,
+            'offers' => $offers
         ]);
     }
 }
