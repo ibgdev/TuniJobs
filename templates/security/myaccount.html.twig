@@ -88,8 +88,20 @@
                             <ul class="application-list">
                                 {% for application in user.applications %}
                                     <li class="application-item">
-                                        <div class="company">{{ application.company.name }}</div>
-                                        <div class="status-indicator {{ application.status|lower }}">{{ application.status }}</div>
+                                        <div class="company">{{ application.joboffer.entreprise.nom }}</div>
+                                        <div>{{ application.joboffer.titre }}</div>
+                                        <div>
+                                            {% if application.statut == 'en attente' %}
+                                                <span class="badge bg-warning text-dark">En attente</span>
+                                            {% elseif application.statut == 'acceptée' %}
+                                                <span class="badge bg-success">Acceptée</span>
+                                            {% elseif application.statut == 'refusée' %}
+                                                <span class="badge bg-danger">Refusée</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary">{{ application.statut }}</span>
+                                            {% endif %}
+                                        </div>
+                                        
                                     </li>
                                 {% endfor %}
                             </ul>

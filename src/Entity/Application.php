@@ -34,6 +34,9 @@ class Application
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $Commentaire = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +110,18 @@ class Application
     public function setStatut(string $statut): static
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->Commentaire;
+    }
+
+    public function setCommentaire(?string $Commentaire): static
+    {
+        $this->Commentaire = $Commentaire;
 
         return $this;
     }

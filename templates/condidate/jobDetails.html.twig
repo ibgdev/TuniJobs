@@ -172,6 +172,13 @@
 	}
 </style>{% endblock %}{% block body %}
 {% include 'navbar.html.twig' %}
+{% for label, messages in app.flashes %}
+	{% for message in messages %}
+		<div class="alert alert-{{ label }}" style="background-color: var(--success-color); color: white; padding: 1rem; border-radius: 5px; margin: 1rem auto; max-width: 600px; text-align: center;">
+			{{ message }}
+		</div>
+	{% endfor %}
+{% endfor %}	
 <div class="container d-flex justify-content-center">
 	<div class="job-offer-container">
 		<div class="job-offer-card">
@@ -232,7 +239,7 @@
 			</div>
 
 			<div class="action-container">
-				<a href="#" class="apply-btn">
+				<a href="{{ path("app_application", {id: joboffer.id}) }}" class="apply-btn">
 					<i class="fas fa-paper-plane"></i>
 					Postuler maintenant
 				</a>

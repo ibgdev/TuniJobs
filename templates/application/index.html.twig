@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Postuler à cette offre{% endblock %}
+
+{% block stylesheets %}
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-text:rgba(67, 98, 238, 0.75);
+        --primary-dark: #202c66;
+        --secondary-color: #3f37c9;
+        --accent-color: #4895ef;
+        --text-color: #2b2d42;
+        --text-light: #8d99ae;
+        --background-light: #f8f9fa;
+        --white: #ffffff;
+        --error-color: #ef233c;
+        --success-color: #4cc9f0;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .form-container {
+        max-width: 900px;
+        margin: 3rem auto;
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+    }
+
+    h1 {
+        text-align: center;
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        color: var(--text-color);
+        font-weight: 600;
+        margin-top: 1rem;
+    }
+
+    input[type="file"],
+    textarea,
+    input[type="text"] {
+        width: 100%;
+        padding: 0.5rem;
+        margin-top: 0.3rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: var(--transition);
+    }
+
+    input[type="file"]:focus,
+    textarea:focus,
+    input[type="text"]:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 2px var(--accent-color);
+    }
+
+    .btn-submit {
+        background-color: var(--primary-color);
+        color: var(--white);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: var(--transition);
+        width: 100%;
+    }
+
+    .btn-submit:hover {
+        background-color: var(--primary-dark);
+    }
+
+    .form-error {
+        color: var(--error-color);
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+
+    <div class="form-container">
+        <h1>Postuler à {{ jobOffer.titre }}</h1>
+        <p style="text-align:center; color: var(--text-light); margin-top: -0.2rem; margin-bottom: 2rem;">
+            Chez <strong style="color: var(--primary-text)">{{ jobOffer.entreprise.nom }}</strong>
+        </p>
+
+        {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+        <div>
+            {{ form_label(form.cv) }}
+            {{ form_widget(form.cv) }}
+            {{ form_errors(form.cv) }}
+        </div>
+
+        <div>
+            {{ form_label(form.letterMotivation) }}
+            {{ form_widget(form.letterMotivation) }}
+            {{ form_errors(form.letterMotivation) }}
+        </div>
+
+        <button class="btn-submit mt-5">Envoyer ma candidature</button>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
