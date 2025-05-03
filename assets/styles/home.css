@@ -71,7 +71,7 @@ h2 {
     display: inline-block;
 }
 
-.scroll-reveal:after {
+.section-header h2:after {
     content: '';
     position: absolute;
     width: 60%;
