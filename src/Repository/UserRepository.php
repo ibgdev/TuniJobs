@@ -53,10 +53,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             return $this->createQueryBuilder('u')
                 ->leftJoin('u.company', 'c')
                 ->where('c.id IS NULL')
+                ->andWhere('u.roles LIKE :role')
+                ->setParameter('role', '%"ROLE_CANDIDATE"%')
                 ->orderBy('u.id', 'ASC')
                 ->getQuery()
                 ->getResult();
         }
+        
+        
         
 
     //    public function findOneBySomeField($value): ?User
