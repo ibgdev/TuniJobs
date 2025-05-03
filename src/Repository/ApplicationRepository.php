@@ -31,13 +31,16 @@ class ApplicationRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Application
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+public function findByEntreprise($value): array
+{
+    return $this->createQueryBuilder('a')
+        ->leftJoin('a.job_offer', 'j') // ← le nom de la relation dans Application
+        ->leftJoin('j.entreprise', 'e') // ← le nom de la relation dans JobOffer
+        ->andWhere('e.id = :val') // ← filtre sur l’entreprise
+        ->setParameter('val', $value)
+        ->orderBy('a.CreatedAt', 'DESC')
+        ->getQuery()
+        ->getResult();
+}
+
 }

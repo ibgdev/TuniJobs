@@ -187,7 +187,7 @@
     margin-bottom: 15px;
   }
   
-  .job-title {
+  .job-titre {
     font-size: 1.5rem;
     color: var(--primary-color);
     margin: 0 0 10px 0;
@@ -195,7 +195,7 @@
     transition: color var(--transition-speed) ease;
   }
   
-  .job-card:hover .job-title {
+  .job-card:hover .job-titre {
     color: var(--primary-light);
   }
   

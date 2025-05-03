@@ -1,0 +1,509 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes candidatures{% endblock %}
+
+{% block stylesheets %}
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-light: #eef2ff;
+        --primary-text: rgba(67, 98, 238, 0.75);
+        --primary-dark: #202c66;
+        --secondary-color: #3f37c9;
+        --accent-color: #4895ef;
+        --text-color: #2b2d42;
+        --text-light: #8d99ae;
+        --background-light: #f8f9fa;
+        --white: #ffffff;
+        --error-color: #ef233c;
+        --success-color: #4cc9f0;
+        --warning-color: #f8961e;
+        --gray-light: #e9ecef;
+        --shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        --hover-shadow: 0 10px 20px rgba(67, 97, 238, 0.15);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .document-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .document-link {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        background-color: var(--background-light);
+        border-radius: 6px;
+        color: var(--text-color);
+        text-decoration: none;
+        transition: var(--transition);
+        font-weight: 500;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .document-link:hover {
+        background-color: rgba(67, 97, 238, 0.1);
+        color: var(--primary-color);
+        border-color: var(--primary-text);
+    }
+    
+    .document-link:active {
+        transform: translateY(1px);
+    }
+
+    .document-link svg {
+        margin-right: 0.75rem;
+        flex-shrink: 0;
+    }
+
+    body {
+        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        background-color: var(--background-light);
+        color: var(--text-color);
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .status-filter{
+        width: 200px;
+        height: 45px;
+        border-radius: 10px;
+        border-color: var(--primary-color);
+        padding: 5px;
+        background-color: var(--background-light);
+    }
+    /* Page Header */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .applications-count {
+        background-color: var(--primary-color);
+        color: var(--white);
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin: 0;
+    }
+
+    /* Status Tabs */
+    .status-tabs {
+        display: flex;
+        border-bottom: 1px solid var(--gray-light);
+        margin-bottom: 2rem;
+    }
+
+    .status-tab {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-light);
+        text-decoration: none;
+        border-bottom: 3px solid transparent;
+        transition: var(--transition);
+        position: relative;
+    }
+
+    .status-tab:hover {
+        color: var(--primary-color);
+    }
+
+    .status-tab.active {
+        color: var(--primary-color);
+        border-bottom-color: var(--primary-color);
+    }
+
+    .status-tab .count {
+        margin-left: 0.5rem;
+        background-color: var(--gray-light);
+        color: var(--text-color);
+        padding: 0.25rem 0.5rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+    }
+
+    .status-tab.active .count {
+        background-color: var(--primary-light);
+        color: var(--primary-color);
+    }
+
+    /* Application Card */
+    .application-card {
+        background-color: var(--white);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 1.75rem;
+        margin-bottom: 1.5rem;
+        transition: var(--transition);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .application-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--hover-shadow);
+    }
+
+    .application-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-top: 0;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid var(--gray-light);
+        padding-bottom: 0.75rem;
+    }
+
+    .application-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .application-details p {
+        margin: 0.5rem 0;
+    }
+
+    .application-details strong {
+        font-weight: 600;
+        color: var(--primary-dark);
+    }
+
+    /* Status Labels */
+    .status-label {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .status-label::before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+    }
+
+    .status-en.attente,
+    .status-en\ attente {
+        background-color: rgba(241, 196, 15, 0.2);
+        color: var(--warning-color);
+    }
+
+    .status-en.attente::before,
+    .status-en\ attente::before {
+        background-color: var(--warning-color);
+    }
+
+    .status-Acceptée {
+        background-color: rgba(76, 201, 240, 0.2);
+        color: var(--success-color);
+    }
+
+    .status-Acceptée::before {
+        background-color: var(--success-color);
+    }
+
+    .status-Refusée {
+        background-color: rgba(239, 35, 60, 0.2);
+        color: var(--error-color);
+    }
+
+    .status-Refusée::before {
+        background-color: var(--error-color);
+    }
+
+    .status-En.cours.de.traitement,
+    .status-En\ cours\ de\ traitement {
+        background-color: rgba(72, 149, 239, 0.2);
+        color: var(--accent-color);
+    }
+
+    .status-En.cours.de.traitement::before,
+    .status-En\ cours\ de\ traitement::before {
+        background-color: var(--accent-color);
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--gray-light);
+    }
+
+    .action-buttons form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: flex-start;
+    }
+
+    .action-btn {
+        padding: 0.75rem 1.25rem;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .btn-accept {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .btn-accept:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+    }
+
+    .btn-accept:active {
+        transform: translateY(0);
+    }
+
+    /* Comment Field */
+    .comment-field {
+        flex-basis: 100%;
+        margin-top: 0.75rem;
+    }
+
+    .comment-field textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 8px;
+        border: 1px solid var(--gray-light);
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: var(--transition);
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .comment-field textarea:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.25);
+        outline: none;
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background-color: var(--white);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+    }
+
+    .empty-state svg {
+        width: 120px;
+        height: auto;
+        margin-bottom: 1.5rem;
+        color: var(--primary-text);
+    }
+
+    .empty-state h3 {
+        font-size: 1.5rem;
+        color: var(--text-color);
+        margin-bottom: 1rem;
+    }
+
+    .empty-state p {
+        color: var(--text-light);
+        max-width: 500px;
+        margin: 0 auto;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    /* Responsive Adjustments */
+    @media(max-width: 768px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .header-actions {
+            align-self: flex-start;
+        }
+
+        .status-tabs {
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .status-tab {
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .application-details {
+            grid-template-columns: 1fr;
+        }
+
+        .action-buttons form {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .action-btn {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+{% include "navbar.html.twig" %}
+
+<div class="container">
+    <header class="page-header">
+        <h1 class="page-title">Mes candidatures</h1>
+        <div class="header-actions">
+            <span class="applications-count">{{ applications|length }}
+                candidature{% if applications|length > 1 %}s{% endif %}
+            </span>
+        </div>
+    </header>
+
+    {# Status Tabs Navigation #}
+    <div class="status-tabs">
+        <a href="{{ path('app_candidature_index') }}" class="status-tab {% if app.request.get('statut') is empty %}active{% endif %}">
+            Toutes
+            <span class="count">{{ all_count }}</span>
+        </a>
+        <a href="{{ path('app_candidature_index', {'statut': 'en attente'}) }}" class="status-tab {% if app.request.get('statut') == 'en attente' %}active{% endif %}">
+            En attente
+            <span class="count">{{ pending_count }}</span>
+        </a>
+        <a href="{{ path('app_candidature_index', {'statut': 'Acceptée'}) }}" class="status-tab {% if app.request.get('statut') == 'Acceptée' %}active{% endif %}">
+            Acceptées
+            <span class="count">{{ accepted_count }}</span>
+        </a>
+        <a href="{{ path('app_candidature_index', {'statut': 'Refusée'}) }}" class="status-tab {% if app.request.get('statut') == 'Refusée' %}active{% endif %}">
+            Refusées
+            <span class="count">{{ rejected_count }}</span>
+        </a>
+    </div>
+
+    {% if applications is empty %}
+        <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <h3>Aucune candidature pour le moment</h3>
+            <p>Vous n'avez pas encore postulé à des offres d'emploi. Parcourez les offres disponibles pour commencer votre recherche.</p>
+        </div>
+    {% else %}
+        <div class="applications-container">
+            {% for application in applications %}
+                <div class="application-card">
+                    <div class="application-title">{{ application.jobOffer.titre }}</div>
+                    <div class="application-details">
+                        <div>
+                            <p><strong>Condidat:</strong> {{ application.utilisateur.nom }}</p>
+                            <p class="mt-2"><strong>Date de candidature:</strong> {{ application.createdAt|date('d/m/Y') }}</p>
+                        </div>
+                        <div>
+                            <p><strong>Email:</strong> {{ application.utilisateur.email }}</p>
+                            <p><strong> Statut:</strong> <span class="status-label status-{{ application.statut|e('html_attr') }}">{{ application.statut }}</span></p>
+                        </div>
+                    </div>
+                    <div class="document-links">
+                        {% if application.cv %}
+                            <a href="{{ path('application_download', {type: 'cv', filename: application.cv}) }}" class="document-link" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Télécharger le CV
+                            </a>
+                        {% endif %}
+                        
+                        {% if application.letterMotivation %}
+                            <a href="{{ path('application_download', {type: 'motivation', filename: application.letterMotivation}) }}" class="document-link" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                Télécharger la lettre de motivation
+                            </a>
+                        {% endif %}
+                    </div>
+
+                    {% if application.commentaire %}
+                        <div class="application-comment">
+                            <strong>Commentaire:</strong>
+                            <p>{{ application.commentaire }}</p>
+                        </div>
+                    {% endif %}
+
+                    {# Only show action buttons for pending applications #}
+                    {% if application.statut == 'en attente' or application.statut == 'En cours de traitement' %}
+                        <div class="action-buttons">
+                            <form method="post" action="{{ path('update_application_status', {'id': application.id}) }}">
+                                <select name="statut" class="status-filter" onchange="toggleCommentField(this, {{ application.id }})" required>
+                                    <option value="">Changer le statut</option>
+                                    <option value="Acceptée">Accepter</option>
+                                    <option value="Refusée">Refuser</option>
+                                </select>
+
+                                <button type="submit" class="action-btn btn-accept">Mettre à jour</button>
+
+                                <div id="comment-field-{{ application.id }}" class="comment-field" style="display: none;">
+                                    <textarea name="commentaire" placeholder="Commentaire obligatoire..." required></textarea>
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    function toggleCommentField(selectElem, appId) {
+        const commentField = document.getElementById('comment-field-' + appId);
+        if (selectElem.value === 'Acceptée' || selectElem.value === 'Refusée') {
+            commentField.style.display = 'block';
+            commentField.querySelector('textarea').setAttribute('required', 'required');
+        } else {
+            commentField.style.display = 'none';
+            commentField.querySelector('textarea').removeAttribute('required');
+        }
+    }
+</script>
+{% endblock %}

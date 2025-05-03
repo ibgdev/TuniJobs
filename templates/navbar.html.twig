@@ -17,14 +17,13 @@
         <div class="nav-links d-flex justify-content-center align-items-center">
             {% if is_granted('ROLE_ENTERPRISE') %}
                 <a class="nav-link active" href="{{ path('job.entreprise') }}" style="color: var(--primary-color);" aria-current="page">Mes Offres</a>
-                <a class="nav-link" href="{{ path('category.all') }}" style="color: var(--primary-color);">Candidatures</a>
-                <a class="nav-link" href="#" style="color: var(--primary-color);">Tests</a>
+                <a class="nav-link" href="{{ path('entre_application.all') }}" style="color: var(--primary-color);">Candidatures</a>
             {% endif %}
 
             {% if is_granted('ROLE_CANDIDATE') %}
                 <a class="nav-link" style="color: var(--primary-color);" href="{{ path('job.all') }}">Trouver un emploi</a>
                 <a class="nav-link" style="color: var(--primary-color);" href="{{ path('cond.company.all') }}">Entreprises</a>
-                <a class="nav-link" style="color: var(--primary-color);">Mes candidatures</a>
+                <a class="nav-link" style="color: var(--primary-color);" href="{{ path('app_application.all') }}">Mes candidatures</a>
             {% endif %}
 
             {% if not is_granted('IS_AUTHENTICATED_FULLY') %}

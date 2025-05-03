@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block stylesheets %}
+{{ parent() }}
 	<link rel="stylesheet" href="{{ asset('styles/companies.css') }}">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,7 +22,7 @@
 
 	<div class="container mt-4">
 		<div class="search-filter-container">
-			<div class="search-container">
+			<div class="search-containerr">
 				<i data-lucide="search" class="search-icon"></i>
 				<input type="text" id="searchInput" placeholder="Rechercher une entreprise ou un secteur..." class="search-input">
 			</div>
