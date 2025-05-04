@@ -11,21 +11,46 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\User; // or wherever your User class is
 use App\Form\JobOfferType;
 use Symfony\Component\HttpFoundation\Request;
-
 final class JobOfferController extends AbstractController
 {
     // jobs for condidatee 
 
-    #[Route('/jobs', name: 'job.all')]
-    public function index(EntityManagerInterface $em): Response
+
+    #[Route('/jobs', name: 'job.all', methods: ['GET'])]
+    public function index(Request $request, EntityManagerInterface $em): Response
     {
-        $jobOffers = $em->getRepository(JobOffer::class)->findAll();
+        $search = $request->query->get('search');
+        $category = $request->query->get('category');
+        $location = $request->query->get('location');
+
+        $qb = $em->getRepository(JobOffer::class)->createQueryBuilder('j')
+            ->leftJoin('j.categorie', 'c')
+            ->addSelect('c');
+
+        if ($search) {
+            $qb->andWhere('LOWER(j.titre) LIKE :search')
+                ->setParameter('search', '%' . strtolower($search) . '%');
+        }
+
+        if ($category) {
+            $qb->andWhere('c.id = :category')
+                ->setParameter('category', $category);
+        }
+
+        if ($location) {
+            $qb->andWhere('j.location = :location')
+                ->setParameter('location', $location);
+        }
+
+        $jobOffers = $qb->getQuery()->getResult();
+
         return $this->render('condidate/jobs.html.twig', [
             'joboffers' => $jobOffers,
             'locations' => $this->getTunisianGovernorates(),
             'categories' => $em->getRepository(Category::class)->findAll(),
         ]);
     }
+
     #[Route('/jobs/details/{id}', name: 'job.details')]
     public function details(EntityManagerInterface $em, JobOffer $jobOffer): Response
     {
@@ -109,10 +134,30 @@ final class JobOfferController extends AbstractController
     public function getTunisianGovernorates(): array
     {
         $governorates = [
-            'Ariana', 'Béja', 'Ben Arous', 'Bizerte', 'Gabès', 'Gafsa', 'Jendouba', 'Kairouan',
-            'Kasserine', 'Kébili', 'Le Kef', 'Mahdia', 'La Manouba', 'Médenine', 'Monastir',
-            'Nabeul', 'Sfax', 'Sidi Bouzid', 'Siliana', 'Sousse', 'Tataouine', 'Tozeur',
-            'Tunis', 'Zaghouan'
+            'Ariana',
+            'Béja',
+            'Ben Arous',
+            'Bizerte',
+            'Gabès',
+            'Gafsa',
+            'Jendouba',
+            'Kairouan',
+            'Kasserine',
+            'Kébili',
+            'Le Kef',
+            'Mahdia',
+            'La Manouba',
+            'Médenine',
+            'Monastir',
+            'Nabeul',
+            'Sfax',
+            'Sidi Bouzid',
+            'Siliana',
+            'Sousse',
+            'Tataouine',
+            'Tozeur',
+            'Tunis',
+            'Zaghouan'
         ];
 
         return array_combine($governorates, $governorates);

@@ -32,7 +32,7 @@
                 <a class="nav-link" style="color: var(--primary-color);" href="{{ path('cond.company.all')}}">Entreprises</a>
             {% endif %}
             {% if not is_granted('IS_AUTHENTICATED_FULLY') or is_granted('ROLE_CANDIDATE') %}
-                <a class="nav-link" style="color: var(--primary-color);" href="{{ path('become.a.company') }}">Devenir un partenaire</a>
+                <a class="nav-link" style="color: var(--primary-color);" href="{{ path('become.a.company') }}">Devenir une entreprise</a>
             {% endif %}
             
         </div>

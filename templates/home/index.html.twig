@@ -1,266 +1,283 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TuniJobs - Votre plateforme d'emploi en Tunisie{% endblock %}
+{% block title %}TuniJobs - Votre plateforme d'emploi en Tunisie
+{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+	<link rel="stylesheet" href="{{ asset('styles/home.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 {% endblock %}
 
 {% block body %}
-    {% include 'navbar.html.twig' %}
+	{% include 'navbar.html.twig' %}
 
-    <!-- Hero Section -->
-    <article class="hero">
-        <div class="hero-content">
-            <h1 class="animate-element">Trouvez le job <span>parfait</span> en Tunisie</h1>
-            <p class="subtitle animate-element">Connectez avec les meilleures opportunités professionnelles à travers tout le pays</p>
-            
-            <div class="search-container animate-element">
-        <!-- Formulaire de recherche -->
-        <form method="get" action="" class="job-search-form">
-            <div class="input-group">
-                <!-- Recherche par titre -->
-                <input type="text" name="search" class="form-control" placeholder="Rechercher une offre..." value="{{ app.request.query.get('search') }}">
+	<!-- Hero Section -->
+	<article class="hero">
+		<div class="hero-content">
+			<h1 class="animate-element">Trouvez le job
+				<span>parfait</span>
+				en Tunisie</h1>
+			<p class="subtitle animate-element">Connectez avec les meilleures opportunités professionnelles à travers tout le pays</p>
 
-                <!-- Filtre par catégorie -->
-                <select name="category" class="form-control">
-                    <option value="">Choisir une catégorie</option>
-                    {% for category in categories %}
-                        <option value="{{ category.id }}" {% if app.request.query.get('category') == category.id %}selected{% endif %}>
-                            {{ category.nom }}
-                        </option>
-                    {% endfor %}
-                </select>
-                <!-- Filtre par localisation -->
-                <select name="location" class="form-control">
-                    <option value="">Choisir une ville</option>
-                    {% for location in locations %}
-                        <option value="{{ location }}" {% if app.request.query.get('location') == location %}selected{% endif %}>
-                            {{ location }}
-                        </option>
-                    {% endfor %}
-                </select>
+			<div
+				class="search-container animate-element">
+				<!-- Formulaire de recherche -->
+				<form method="get" action="{{ path('job.all') }}" class="job-search-form mb-4">
+					<div
+						class="input-group">
+						<!-- Recherche par titre -->
+						<input
+						type="text" name="search" class="form-control" placeholder="Rechercher une offre..." value="{{ app.request.query.get('search') }}">
 
+						<!-- Filtre par catégorie -->
+						<select name="category" class="form-control">
+							<option value="">Choisir une catégorie</option>
+							{% for category in categories %}
+								<option value="{{ category.id }}" {% if app.request.query.get('category') == category.id|striptags %} selected {% endif %}>
+									{{ category.nom }}
+								</option>
+							{% endfor %}
+						</select>
 
-                <!-- Bouton de recherche -->
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </form>
-            </div>
-            
-        </div>
-    </article>
-<hr style="margin-top: 5%;">
-    <article class="stats " style="display: flex; justify-content: space-around; align-items: center;">
-            <div class="stat-item" style="--i: 1;">
-                <span class="number" data-count="1250">1,250+</span>
-                <span class="label">Offres d'emploi</span>
-            </div>
-            <div class="stat-item" style="--i: 2;">
-                <span class="number" data-count="500">500+</span>
-                <span class="label">Entreprises</span>
-            </div>
-            <div class="stat-item" style="--i: 3;">
-                <span class="number" data-count="10000">10,000+</span>
-                <span class="label">Candidats</span>
-            </div>
-    </article>
-    <hr>
-    <!-- Categories Section -->
-    <section class="categories" id="categories">
-        <div class="section-header">
-            <h2 class="scroll-reveal">Catégories populaires</h2>
-            <a href="" class="see-all">Voir tout <i class="fas fa-arrow-right"></i></a>
-        </div>
-        
-        <div class="categories-grid">
-            <a href="" class="category-card scroll-reveal" data-delay="100">
-                <div class="category-icon" style="background-color: #7e22ce20;">
-                    <i class="fas fa-laptop-code" style="color: #7e22ce;"></i>
-                </div>
-                <h3>Informatique & Tech</h3>
-                <p class="job-count">320 offres</p>
-            </a>
-            
-            <a href="" class="category-card scroll-reveal" data-delay="200">
-                <div class="category-icon" style="background-color: #10b98120;">
-                    <i class="fas fa-chart-line" style="color: #10b981;"></i>
-                </div>
-                <h3>Finance & Comptabilité</h3>
-                <p class="job-count">180 offres</p>
-            </a>
-            
-            <a href="" class="category-card scroll-reveal" data-delay="300">
-                <div class="category-icon" style="background-color: #3b82f620;">
-                    <i class="fas fa-bullhorn" style="color: #3b82f6;"></i>
-                </div>
-                <h3>Marketing & Communication</h3>
-                <p class="job-count">150 offres</p>
-            </a>
-            
-            <a href="" class="category-card scroll-reveal" data-delay="400">
-                <div class="category-icon" style="background-color: #ef444420;">
-                    <i class="fas fa-heartbeat" style="color: #ef4444;"></i>
-                </div>
-                <h3>Santé & Médical</h3>
-                <p class="job-count">120 offres</p>
-            </a>
-            
-            <a href="" class="category-card scroll-reveal" data-delay="500">
-                <div class="category-icon" style="background-color: #f59e0b20;">
-                    <i class="fas fa-cogs" style="color: #f59e0b;"></i>
-                </div>
-                <h3>Ingénierie</h3>
-                <p class="job-count">210 offres</p>
-            </a>
-            
-            <a href="" class="category-card scroll-reveal" data-delay="600">
-                <div class="category-icon" style="background-color: #8b5cf620;">
-                    <i class="fas fa-graduation-cap" style="color: #8b5cf6;"></i>
-                </div>
-                <h3>Éducation</h3>
-                <p class="job-count">90 offres</p>
-            </a>
-        </div>
-    </section>
+						<!-- Filtre par localisation -->
+						<select name="location" class="form-control">
+							<option value="">Choisir une ville</option>
+							{% for location in locations %}
+								<option value="{{ location }}" {% if app.request.query.get('location') == location %} selected {% endif %}>
+									{{ location }}
+								</option>
+							{% endfor %}
+						</select>
 
-    <!-- Featured Jobs -->
-    <section class="featured-jobs" id="jobs">
-        <div class="section-header">
-            <h2 class="scroll-reveal">Offres récentes</h2>
-            <a href="" class="see-all">Voir tout <i class="fas fa-arrow-right"></i></a>
-        </div>
-        
-        <div class="jobs-grid">
-            {% for job in featuredJobs %}
-                <div class="job-card scroll-reveal" data-delay="{{ loop.index * 100 }}">
-                    <div class="job-header">
-                        <div class="company-logo">
-                            <img src="{{ job.entreprise.logoUrl }}" alt="{{ job.entreprise.nom }}">
-                        </div>
-                        <div class="job-info">
-                            <h3>{{ job.titre }}</h3>
-                            <p class="company-name">{{ job.entreprise.nom }}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="job-details">
-                        <span class="job-location">
-                            <i class="fas fa-map-marker-alt"></i> {{ job.location }}
-                        </span>
-                        <span class="job-salary">
-                            <i class="fas fa-money-bill-wave"></i> {{ job.salaire }} TND
-                        </span>
-                    </div>
-                    
-                    <div class="job-footer">
-                        <span class="job-posted">
-                            <i class="far fa-clock"></i> {{ job.datePublication|date('d/m/Y') }}
-                        </span>
-                        <a href="" class="apply-button">
-                            Postuler <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </section>
+						<!-- Bouton de recherche -->
+						<button type="submit" class="btn btn-primary">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
+				</form>
 
-    <!-- How It Works -->
-    <article class="how-it-works" id="how-it-works">
-        <h2 class="scroll-reveal">Comment ça marche ?</h2>
-        <p class="section-subtitle scroll-reveal mt-5">Trouvez votre emploi idéal en seulement 3 étapes</p>
-        
-        <div class="steps-container">
-            <div class="step scroll-reveal" data-delay="100">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>Créez votre profil</h3>
-                    <p>Inscrivez-vous et complétez votre profil pour être visible par les recruteurs</p>
-                </div>
-            </div>
-            
-            <div class="step scroll-reveal" data-delay="300">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Trouvez des offres</h3>
-                    <p>Parcourez nos milliers d'offres d'emploi et postulez en un clic</p>
-                </div>
-            </div>
-            
-            <div class="step scroll-reveal" data-delay="500">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>Obtenez des réponses</h3>
-                    <p>Recevez des réponses directement des entreprises et décrochez l'emploi</p>
-                </div>
-            </div>
-        </div>
-    </article>
+			</div>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <h2 class="scroll-reveal">Témoignages</h2>
-        <p class="section-subtitle scroll-reveal">Ce que nos utilisateurs disent de nous</p>
-        
-        <div class="testimonials-grid">
-            <div class="testimonial-card scroll-reveal" data-delay="100">
-                <div class="testimonial-content">
-                    <i class="fas fa-quote-left quote-icon"></i>
-                    <p>Grâce à TuniJobs, j'ai trouvé un emploi dans une grande entreprise tunisienne en seulement 2 semaines. La plateforme est très intuitive et les offres sont de qualité.</p>
-                </div>
-                <div class="testimonial-author">
-                    <img src="https://michelrichardphotographe.fr/wp-content/uploads/2023/03/Photo-pro-linkedin-6.jpg" alt="Mohamed Amine">
-                    <div class="author-info">
-                        <h4>Mohamed Amine</h4>
-                        <p>Développeur Web</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-card scroll-reveal" data-delay="200">
-                <div class="testimonial-content">
-                    <i class="fas fa-quote-left quote-icon"></i>
-                    <p>J'ai pu trouver un excellent employé pour mon entreprise grâce à TuniJobs. La plateforme m'a permis de publier rapidement et de recevoir des candidatures de qualité.</p>
-                </div>
-                <div class="testimonial-author">
-                    <img src="https://blog.pincel.app/wp-content/uploads/2024/02/LinkedIn_profile_photo_professional_full_body_smile_soft-focus_bright_blurred_office_background.jpeg" alt="Rania Khaled">
-                    <div class="author-info">
-                        <h4>Rania Khaled</h4>
-                        <p>Responsable RH</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+		</div>
+	</article>
+	<hr style="margin-top: 5%;">
+	<article class="stats " style="display: flex; justify-content: space-around; align-items: center;">
+		<div class="stat-item" style="--i: 1;">
+			<span class="number" data-count="1250">1,250+</span>
+			<span class="label">Offres d'emploi</span>
+		</div>
+		<div class="stat-item" style="--i: 2;">
+			<span class="number" data-count="500">500+</span>
+			<span class="label">Entreprises</span>
+		</div>
+		<div class="stat-item" style="--i: 3;">
+			<span class="number" data-count="10000">10,000+</span>
+			<span class="label">Candidats</span>
+		</div>
+	</article>
+	<hr>
+	<!-- Categories Section -->
+	<section class="categories" id="categories">
+		<div class="section-header">
+			<h2 class="scroll-reveal">Catégories populaires</h2>
+			<a href="" class="see-all">Voir tout
+				<i class="fas fa-arrow-right"></i>
+			</a>
+		</div>
 
-        <!-- Become a Company Section -->
-        <section class="become-company" id="become-company">
-            <div class="section-header">
-                <h2 class="scroll-reveal">Devenez une entreprise partenaire</h2>
-                <p class="section-subtitle scroll-reveal">Publiez vos offres d'emploi et recrutez les meilleurs talents en Tunisie</p>
-            </div>
-            
-            <div class="company-info">
-                <div class="company-content scroll-reveal" data-delay="200">
-                    <h3>Pourquoi rejoindre TuniJobs ?</h3>
-                    <ul>
-                        <li>Accédez à une large base de candidats qualifiés</li>
-                        <li>Publiez des offres d'emploi en quelques clics</li>
-                        <li>Suivez les candidatures et gérez les profils facilement</li>
-                        <li>Optimisez vos processus de recrutement grâce à notre plateforme intuitive</li>
-                    </ul>
-                    <a href="/become-a-company" class="btn btn-primary">
-                        Devenir une entreprise partenaire
-                    </a>
-                </div>
-            </div>
-        </section>
-        <hr>
-    
-    {% include 'footer.html.twig' %}
+		<div class="categories-grid">
+			<a href="" class="category-card scroll-reveal" data-delay="100">
+				<div class="category-icon" style="background-color: #7e22ce20;">
+					<i class="fas fa-laptop-code" style="color: #7e22ce;"></i>
+				</div>
+				<h3>Informatique & Tech</h3>
+				<p class="job-count">320 offres</p>
+			</a>
+
+			<a href="" class="category-card scroll-reveal" data-delay="200">
+				<div class="category-icon" style="background-color: #10b98120;">
+					<i class="fas fa-chart-line" style="color: #10b981;"></i>
+				</div>
+				<h3>Finance & Comptabilité</h3>
+				<p class="job-count">180 offres</p>
+			</a>
+
+			<a href="" class="category-card scroll-reveal" data-delay="300">
+				<div class="category-icon" style="background-color: #3b82f620;">
+					<i class="fas fa-bullhorn" style="color: #3b82f6;"></i>
+				</div>
+				<h3>Marketing & Communication</h3>
+				<p class="job-count">150 offres</p>
+			</a>
+
+			<a href="" class="category-card scroll-reveal" data-delay="400">
+				<div class="category-icon" style="background-color: #ef444420;">
+					<i class="fas fa-heartbeat" style="color: #ef4444;"></i>
+				</div>
+				<h3>Santé & Médical</h3>
+				<p class="job-count">120 offres</p>
+			</a>
+
+			<a href="" class="category-card scroll-reveal" data-delay="500">
+				<div class="category-icon" style="background-color: #f59e0b20;">
+					<i class="fas fa-cogs" style="color: #f59e0b;"></i>
+				</div>
+				<h3>Ingénierie</h3>
+				<p class="job-count">210 offres</p>
+			</a>
+
+			<a href="" class="category-card scroll-reveal" data-delay="600">
+				<div class="category-icon" style="background-color: #8b5cf620;">
+					<i class="fas fa-graduation-cap" style="color: #8b5cf6;"></i>
+				</div>
+				<h3>Éducation</h3>
+				<p class="job-count">90 offres</p>
+			</a>
+		</div>
+	</section>
+
+	<!-- Featured Jobs -->
+	<section class="featured-jobs" id="jobs">
+		<div class="section-header">
+			<h2 class="scroll-reveal">Offres récentes</h2>
+			<a href="" class="see-all">Voir tout
+				<i class="fas fa-arrow-right"></i>
+			</a>
+		</div>
+
+		<div class="jobs-grid">
+			{% for job in featuredJobs %}
+				<div class="job-card scroll-reveal" data-delay="{{ loop.index * 100 }}">
+					<div class="job-header">
+						<div class="company-logo">
+							<img src="{{ job.entreprise.logoUrl }}" alt="{{ job.entreprise.nom }}">
+						</div>
+						<div class="job-info">
+							<h3>{{ job.titre }}</h3>
+							<p class="company-name">{{ job.entreprise.nom }}</p>
+						</div>
+					</div>
+
+					<div class="job-details">
+						<span class="job-location">
+							<i class="fas fa-map-marker-alt"></i>
+							{{ job.location }}
+						</span>
+						<span class="job-salary">
+							<i class="fas fa-money-bill-wave"></i>
+							{{ job.salaire }}
+							TND
+						</span>
+					</div>
+
+					<div class="job-footer">
+						<span class="job-posted">
+							<i class="far fa-clock"></i>
+							{{ job.datePublication|date('d/m/Y') }}
+						</span>
+						<a href="" class="apply-button">
+							Postuler
+							<i class="fas fa-arrow-right"></i>
+						</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</section>
+
+	<!-- How It Works -->
+	<article class="how-it-works" id="how-it-works">
+		<h2 class="scroll-reveal">Comment ça marche ?</h2>
+		<p class="section-subtitle scroll-reveal mt-5">Trouvez votre emploi idéal en seulement 3 étapes</p>
+
+		<div class="steps-container">
+			<div class="step scroll-reveal" data-delay="100">
+				<div class="step-number">1</div>
+				<div class="step-content">
+					<h3>Créez votre profil</h3>
+					<p>Inscrivez-vous et complétez votre profil pour être visible par les recruteurs</p>
+				</div>
+			</div>
+
+			<div class="step scroll-reveal" data-delay="300">
+				<div class="step-number">2</div>
+				<div class="step-content">
+					<h3>Trouvez des offres</h3>
+					<p>Parcourez nos milliers d'offres d'emploi et postulez en un clic</p>
+				</div>
+			</div>
+
+			<div class="step scroll-reveal" data-delay="500">
+				<div class="step-number">3</div>
+				<div class="step-content">
+					<h3>Obtenez des réponses</h3>
+					<p>Recevez des réponses directement des entreprises et décrochez l'emploi</p>
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<!-- Testimonials -->
+	<section class="testimonials" id="testimonials">
+		<h2 class="scroll-reveal">Témoignages</h2>
+		<p class="section-subtitle scroll-reveal">Ce que nos utilisateurs disent de nous</p>
+
+		<div class="testimonials-grid">
+			<div class="testimonial-card scroll-reveal" data-delay="100">
+				<div class="testimonial-content">
+					<i class="fas fa-quote-left quote-icon"></i>
+					<p>Grâce à TuniJobs, j'ai trouvé un emploi dans une grande entreprise tunisienne en seulement 2 semaines. La plateforme est très intuitive et les offres sont de qualité.</p>
+				</div>
+				<div class="testimonial-author">
+					<img src="https://michelrichardphotographe.fr/wp-content/uploads/2023/03/Photo-pro-linkedin-6.jpg" alt="Mohamed Amine">
+					<div class="author-info">
+						<h4>Mohamed Amine</h4>
+						<p>Développeur Web</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="testimonial-card scroll-reveal" data-delay="200">
+				<div class="testimonial-content">
+					<i class="fas fa-quote-left quote-icon"></i>
+					<p>J'ai pu trouver un excellent employé pour mon entreprise grâce à TuniJobs. La plateforme m'a permis de publier rapidement et de recevoir des candidatures de qualité.</p>
+				</div>
+				<div class="testimonial-author">
+					<img src="https://blog.pincel.app/wp-content/uploads/2024/02/LinkedIn_profile_photo_professional_full_body_smile_soft-focus_bright_blurred_office_background.jpeg" alt="Rania Khaled">
+					<div class="author-info">
+						<h4>Rania Khaled</h4>
+						<p>Responsable RH</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Become a Company Section -->
+	<section class="become-company" id="become-company">
+		<div class="section-header">
+			<h2 class="scroll-reveal">Devenez une entreprise partenaire</h2>
+			<p class="section-subtitle scroll-reveal">Publiez vos offres d'emploi et recrutez les meilleurs talents en Tunisie</p>
+		</div>
+
+		<div class="company-info">
+			<div class="company-content scroll-reveal" data-delay="200">
+				<h3>Pourquoi rejoindre TuniJobs ?</h3>
+				<ul>
+					<li>Accédez à une large base de candidats qualifiés</li>
+					<li>Publiez des offres d'emploi en quelques clics</li>
+					<li>Suivez les candidatures et gérez les profils facilement</li>
+					<li>Optimisez vos processus de recrutement grâce à notre plateforme intuitive</li>
+				</ul>
+				<a href="/become-a-company" class="btn btn-primary">
+					Devenir une entreprise partenaire
+				</a>
+			</div>
+		</div>
+	</section>
+	<hr>
+
+	{% include 'footer.html.twig' %}
 {% endblock %}
+

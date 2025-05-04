@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-{{ parent() }}
+	{{ parent() }}
 	<link rel="stylesheet" href="{{ asset('styles/jobs.css') }}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 {% endblock %}
@@ -19,7 +19,7 @@
 		</div>
 
 		<!-- Formulaire de recherche -->
-		<form method="get" action="" class="job-search-form mb-4">
+		<form method="get" action="{{ path('job.all') }}" class="job-search-form mb-4">
 			<div
 				class="input-group">
 				<!-- Recherche par titre -->
@@ -30,11 +30,12 @@
 				<select name="category" class="form-control">
 					<option value="">Choisir une catégorie</option>
 					{% for category in categories %}
-						<option value="{{ category.id }}" {% if app.request.query.get('category') == category.id %} selected {% endif %}>
+						<option value="{{ category.id }}" {% if app.request.query.get('category') == category.id|striptags %} selected {% endif %}>
 							{{ category.nom }}
 						</option>
 					{% endfor %}
 				</select>
+
 				<!-- Filtre par localisation -->
 				<select name="location" class="form-control">
 					<option value="">Choisir une ville</option>
@@ -45,13 +46,13 @@
 					{% endfor %}
 				</select>
 
-
 				<!-- Bouton de recherche -->
 				<button type="submit" class="btn btn-primary">
 					<i class="fas fa-search"></i>
 				</button>
 			</div>
 		</form>
+
 
 		{% if joboffers is empty %}
 			<div class="empty-state">
