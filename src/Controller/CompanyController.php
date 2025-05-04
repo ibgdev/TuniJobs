@@ -95,4 +95,9 @@ final class CompanyController extends AbstractController
         return $this->redirectToRoute('company.all');
     }
     
+    #[Route('/become-a-company', name: 'become.a.company')]
+    public function become(): Response
+    {
+        return $this->render('entreprise/devenir_entreprise.html.twig');
+    }
 }

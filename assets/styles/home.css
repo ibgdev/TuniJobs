@@ -86,6 +86,110 @@ h2 {
     width: 100px;
 }
 
+/* Become a Company Section */
+.become-company {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.become-company .section-header {
+    margin-bottom: 30px;
+}
+
+.become-company .section-header h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.become-company .section-header .section-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-top: 10px;
+}
+
+.become-company .company-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.become-company .company-image {
+    flex: 1;
+    max-width: 500px;
+    margin-right: 30px;
+}
+
+.become-company .company-image img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.become-company .company-content {
+    flex: 1;
+    max-width: 500px;
+    padding: 20px;
+    text-align: left;
+}
+
+.become-company .company-content h3 {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 20px;
+}
+
+.become-company .company-content ul {
+    list-style-type: none;
+    padding-left: 0;
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.become-company .company-content ul li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.become-company .company-content ul li::before {
+    content: "\f00c"; /* Check icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: var(--primary-color);
+    margin-right: 10px;
+}
+
+.become-company .company-content .btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.become-company .company-content .btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+@media screen and (max-width: 768px) {
+    .become-company .company-info {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .become-company .company-image {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+}
+
+
 .section-subtitle {
     color: var(--text-light);
     margin-bottom: 2.5rem;

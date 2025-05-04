@@ -214,128 +214,53 @@
                     <p>Grâce à TuniJobs, j'ai trouvé un emploi dans une grande entreprise tunisienne en seulement 2 semaines. La plateforme est très intuitive et les offres sont de qualité.</p>
                 </div>
                 <div class="testimonial-author">
-                    <img src="{{ asset('images/testimonial-1.jpg') }}" alt="Mohamed Amine">
+                    <img src="https://michelrichardphotographe.fr/wp-content/uploads/2023/03/Photo-pro-linkedin-6.jpg" alt="Mohamed Amine">
                     <div class="author-info">
                         <h4>Mohamed Amine</h4>
-                        <p>Développeur Web chez Telnet</p>
+                        <p>Développeur Web</p>
                     </div>
                 </div>
             </div>
             
-            <div class="testimonial-card scroll-reveal" data-delay="300">
+            <div class="testimonial-card scroll-reveal" data-delay="200">
                 <div class="testimonial-content">
                     <i class="fas fa-quote-left quote-icon"></i>
-                    <p>En tant que recruteur, TuniJobs m'a permis de trouver des profils très pertinents pour nos postes vacants. Le système de matching est vraiment efficace.</p>
+                    <p>J'ai pu trouver un excellent employé pour mon entreprise grâce à TuniJobs. La plateforme m'a permis de publier rapidement et de recevoir des candidatures de qualité.</p>
                 </div>
                 <div class="testimonial-author">
-                    <img src="{{ asset('images/testimonial-2.jpg') }}" alt="Sarah Ben Youssef">
+                    <img src="https://blog.pincel.app/wp-content/uploads/2024/02/LinkedIn_profile_photo_professional_full_body_smile_soft-focus_bright_blurred_office_background.jpeg" alt="Rania Khaled">
                     <div class="author-info">
-                        <h4>Sarah Ben Youssef</h4>
-                        <p>Responsable RH chez Ooredoo</p>
+                        <h4>Rania Khaled</h4>
+                        <p>Responsable RH</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Call to Action -->
-    <section class="cta-section scroll-reveal">
-        <div class="cta-content">
-            <h2>Prêt à trouver votre prochain emploi ?</h2>
-            <p>Rejoignez des milliers de professionnels et entreprises qui utilisent déjà TuniJobs</p>
-            <div class="cta-buttons">
-                <a href="" class="cta-button primary">Créer un compte</a>
-                <a href="" class="cta-button secondary">Voir les offres</a>
+        <!-- Become a Company Section -->
+        <section class="become-company" id="become-company">
+            <div class="section-header">
+                <h2 class="scroll-reveal">Devenez une entreprise partenaire</h2>
+                <p class="section-subtitle scroll-reveal">Publiez vos offres d'emploi et recrutez les meilleurs talents en Tunisie</p>
             </div>
-        </div>
-    </section>
+            
+            <div class="company-info">
+                <div class="company-content scroll-reveal" data-delay="200">
+                    <h3>Pourquoi rejoindre TuniJobs ?</h3>
+                    <ul>
+                        <li>Accédez à une large base de candidats qualifiés</li>
+                        <li>Publiez des offres d'emploi en quelques clics</li>
+                        <li>Suivez les candidatures et gérez les profils facilement</li>
+                        <li>Optimisez vos processus de recrutement grâce à notre plateforme intuitive</li>
+                    </ul>
+                    <a href="/become-a-company" class="btn btn-primary">
+                        Devenir une entreprise partenaire
+                    </a>
+                </div>
+            </div>
+        </section>
+        <hr>
     
     {% include 'footer.html.twig' %}
-{% endblock %}
-
-{% block javascripts %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Animation for elements when they come into view
-        const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const delay = entry.target.dataset.delay || 0;
-                    setTimeout(() => {
-                        entry.target.classList.add('animate-slide-up');
-                    }, delay);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        scrollRevealElements.forEach(element => {
-            observer.observe(element);
-        });
-        
-        // Hero animation
-        const animateElements = document.querySelectorAll('.animate-element');
-        animateElements.forEach((element, index) => {
-            setTimeout(() => {
-                element.classList.add('animate-slide-left');
-            }, index * 200);
-        });
-        
-        // Number counter animation
-        const numberElements = document.querySelectorAll('.number');
-        numberElements.forEach(element => {
-            const targetNumber = parseInt(element.getAttribute('data-count'));
-            let currentNumber = 0;
-            const duration = 2000; // ms
-            const interval = 20; // ms
-            const increment = targetNumber / (duration / interval);
-            
-            const counter = setInterval(() => {
-                currentNumber += increment;
-                if (currentNumber >= targetNumber) {
-                    currentNumber = targetNumber;
-                    clearInterval(counter);
-                }
-                
-                // Format the number with commas
-                const formattedNumber = Math.floor(currentNumber).toLocaleString() + '+';
-                element.textContent = formattedNumber;
-            }, interval);
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80, // Adjust for header height
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Add hover effect to job cards
-        const jobCards = document.querySelectorAll('.job-card');
-        jobCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-8px)';
-                card.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.1)';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-                card.style.boxShadow = 'none';
-            });
-        });
-    });
-</script>
 {% endblock %}

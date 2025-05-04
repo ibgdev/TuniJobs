@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Devenir une entreprise | TuniJobs{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/devenir.css') }}">
+{% endblock %}
+{% block body %}
+    {% include 'navbar.html.twig' %}
+<section class="become-company-section">
+    <div class="container">
+        <h1 class="page-title">Devenir une entreprise partenaire</h1>
+        <p class="page-intro">
+            Vous souhaitez publier vos offres d'emploi sur <strong>TuniJobs</strong> ? Rejoignez notre réseau en devenant une entreprise partenaire.
+        </p>
+
+        <div class="instructions-box">
+            <h2 class="section-subtitle">Étapes à suivre :</h2>
+            <p>Pour faire une demande de création de compte entreprise, veuillez envoyer un email à l'adresse suivante :</p>
+            <a class="email" href="mailto:support-team@tunijobs.tn"><strong>support-team@tunijobs.tn</strong></a>
+
+            <p>L'email doit contenir les informations suivantes :</p>
+            <ul class="company-details-list">
+                <li><strong>Nom de l'entreprise</strong></li>
+                <li><strong>Matricule Fiscale</strong></li>
+                <li><strong>Secteur d'activité</strong></li>
+                <li><strong>Adresse complète</strong></li>
+                <li><strong>Site web</strong></li>
+                <li><strong>Numéro de téléphone</strong></li>
+                <li><strong>Email du responsable</strong> (le responsable doit avoir un compte candidat actif sur la plateforme)</li>
+                <li><strong>URL du logo</strong> ou le <strong>logo en pièce jointe</strong></li>
+            </ul>
+
+            <p class="note">Notre équipe vous contactera dès que votre demande aura été examinée.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

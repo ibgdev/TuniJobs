@@ -24,12 +24,17 @@
                 <a class="nav-link" style="color: var(--primary-color);" href="{{ path('job.all') }}">Trouver un emploi</a>
                 <a class="nav-link" style="color: var(--primary-color);" href="{{ path('cond.company.all') }}">Entreprises</a>
                 <a class="nav-link" style="color: var(--primary-color);" href="{{ path('app_application.all') }}">Mes candidatures</a>
+                
             {% endif %}
 
             {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                 <a class="nav-link" style="color: var(--primary-color);" href="{{ path('job.all') }}">Trouver un emploi</a>
                 <a class="nav-link" style="color: var(--primary-color);" href="{{ path('cond.company.all')}}">Entreprises</a>
             {% endif %}
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') or is_granted('ROLE_CANDIDATE') %}
+                <a class="nav-link" style="color: var(--primary-color);" href="{{ path('become.a.company') }}">Devenir un partenaire</a>
+            {% endif %}
+            
         </div>
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
