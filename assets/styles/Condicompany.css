@@ -461,6 +461,98 @@ body.dark-mode .card-footer {
     margin-right: 0.5rem;
 }
 
+/* Testimonials section styling fixes */
+
+/* Adjust the testimonials section to match other sections */
+.testimonials-section {
+    margin-top: 3rem; /* Match the spacing of job-offers section */
+    padding: 0; /* Remove padding to match other sections */
+    background-color: transparent; /* Use the page background instead */
+}
+
+.testimonials-section .container {
+    padding: 0; /* Remove container padding */
+    max-width: 100%; /* Use full width like other sections */
+}
+
+/* Make the section title match the job offers section title */
+.testimonials-section .section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+    text-align: left; /* Align left like other section titles */
+}
+
+body.dark-mode .testimonials-section .section-title {
+    color: var(--primary-light);
+    border-bottom-color: var(--primary-color);
+}
+
+/* Make the review cards match the job cards style */
+.review-card {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e2e8f0;
+    padding: 1.5rem;
+    height: 100%;
+}
+
+body.dark-mode .review-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(67, 97, 238, 0.15);
+}
+
+/* Adjust stars styling */
+.review-stars {
+    font-size: 1rem;
+}
+
+.star.filled {
+    color: var(--primary-color);
+}
+
+body.dark-mode .star.filled {
+    color: var(--primary-light);
+}
+
+/* Add empty state styling for testimonials */
+.testimonials-section .empty-state {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    margin-top: 1.5rem;
+    border: 1px dashed #d1d5db;
+}
+
+body.dark-mode .testimonials-section .empty-state {
+    background-color: #1e293b;
+    border-color: #4b5563;
+}
+
+/* Responsive fixes */
+@media (max-width: 600px) {
+    .testimonials-section .section-title {
+        font-size: 1.25rem;
+    }
+    
+    .review-card {
+        padding: 1.25rem;
+    }
+}
+
 .btn-outline {
     background-color: transparent;
     border: 1px solid #d1d5db;

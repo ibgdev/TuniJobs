@@ -180,6 +180,50 @@
 				</div>
 			{% endif %}
 		</div>
+
+<!-- Replace the current testimonials section with this improved version -->
+<div class="company-testimonials mt-5">
+    <h2 class="info-section-title">
+        <i class="fas fa-comment-dots me-2"></i>Témoignages
+    </h2>
+
+    {% if reviews is empty %}
+        <div class="empty-state">
+            <i class="fas fa-comment-slash"></i>
+            <h3>Aucun témoignage disponible</h3>
+            <p>Cette entreprise n'a pas encore reçu de témoignages de ses utilisateurs.</p>
+        </div>
+    {% else %}
+        <div class="job-grid">
+            {% for review in reviews %}
+                <div class="job-card review-card">
+                    <div class="card-header">
+                        <div class="review-header">
+                            <div class="review-user-info">
+                                <strong class="review-user-name">{{ review.utilisateur.nom }}</strong>
+                                <span class="review-date">{{ review.createdAt|date('d/m/Y') }}</span>
+                            </div>
+                            <div class="review-stars">
+                                {% for i in 1..5 %}
+                                    {% if i <= review.note %}
+                                        <span class="star filled">★</span>
+                                    {% else %}
+                                        <span class="star">☆</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <p class="job-description">"{{ review.commentaire }}"</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+		
 	</div>
 	{% include 'footer.html.twig' %}
 

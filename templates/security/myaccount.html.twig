@@ -61,26 +61,7 @@
 
             <!-- User Activity Section -->
             <div class="activity-section">
-                {% if is_granted('ROLE_ENTERPRISE') %}
-                    <div class="activity-card reviews">
-                        <h3>Company Reviews</h3>
-                        {% if user.reviews is not empty %}
-                            <ul class="review-list">
-                                {% for review in user.reviews %}
-                                    <li class="review-item">
-                                        <h4>{{ review.title }}</h4>
-                                        <p>{{ review.comment }}</p>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <div class="empty-state">
-                                <p>No reviews available yet</p>
-                            </div>
-                        {% endif %}
-                    </div>
-                {% endif %}
-
+                
                 {% if is_granted('ROLE_CANDIDATE') %}
                     <div class="activity-card applications">
                         <h3>Your Applications</h3>

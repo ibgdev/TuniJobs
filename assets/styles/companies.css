@@ -169,13 +169,14 @@ body {
 }
 
 .stat-item i {
-    background-color: rgba(109, 40, 217, 0.1);
+    background-color: rgba(40, 52, 217, 0.1);
     padding: 0.8rem;
     border-radius: var(--radius-sm);
     color: var(--primary-color);
-    width: 24px;
-    height: 24px;
+
 }
+
+
 
 .stat-details {
     display: flex;

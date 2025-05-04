@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Avis sur {{ company.nom }} | Annuaire Professionnel{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/review.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+
+    <div class="review-container">
+        <div class="review-header">
+            <div class="company-info">
+                <img src="{{ company.logourl }}" alt="{{ company.nom }} logo" class="company-logo">
+                <h1>Donnez votre avis sur {{ company.nom }}</h1>
+                <p class="company-sector">{{ company.secteur }}</p>
+            </div>
+            
+            {% if existingReview %}
+                <div class="existing-review-alert">
+                    <i class="fas fa-info-circle"></i>
+                    Vous avez déjà donné un avis pour cette entreprise. Vous pouvez le modifier ci-dessous.
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="review-form-container">
+            {{ form_start(form, {'attr': {'data-turbo': 'false'}, 'method': 'POST'}) }}
+
+            {{ form_widget(form.note, {'attr': {'id': 'note_inp'}}) }}
+
+            <div class="rating-section">
+                <label>Votre note</label>
+                <div class="star-rating">
+                    {% for i in 5..1 %}
+                        <input type="radio" id="star{{ i }}" name="{{ form.note.vars.full_name }}" value="{{ i }}" 
+                               {% if form.note.vars.value == i %}checked{% endif %}
+                               required>
+                        <label for="star{{ i }}"><i class="fas fa-star"></i></label>
+                    {% endfor %}
+                </div>
+                {{ form_errors(form.note) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.commentaire) }}
+                {{ form_widget(form.commentaire) }}
+                {{ form_errors(form.commentaire) }}
+            </div>
+
+            <button type="submit" class="submit-review-btn">
+                <i class="fas fa-paper-plane"></i> 
+                {{ existingReview ? 'Mettre à jour mon avis' : 'Envoyer mon avis' }}
+            </button>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    {% include "footer.html.twig" %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const stars = document.querySelectorAll('.star-rating input');
+    stars.forEach(star => {
+        star.addEventListener('change', function () {
+            const noteInput = document.getElementById("note_inp");
+            if (noteInput) {
+                noteInput.value = this.value;
+            }
+        });
+    });
+});
+
+</script>
+
+{% endblock %}
