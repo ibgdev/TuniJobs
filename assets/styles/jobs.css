@@ -367,3 +367,40 @@
   .job-card:nth-child(4) { animation-delay: 0.3s; }
   .job-card:nth-child(5) { animation-delay: 0.4s; }
   .job-card:nth-child(6) { animation-delay: 0.5s; }
+
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 40px 0;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  
+  .pagination a{
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 500;
+    background-color: var(--card-bg);
+    color: var(--primary-dark);
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(67, 97, 238, 0.15);
+  }
+  
+  .pagination a:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(74, 11, 111, 0.15);
+  }
+  
+  .page-link.disabled {
+    pointer-events: none;
+    color: #aaa;
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}

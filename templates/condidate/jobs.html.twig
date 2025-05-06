@@ -103,7 +103,25 @@
 				{% endfor %}
 			</div>
 		{% endif %}
+		
 	</div>
+	{% if totalPages > 1 %}
+		<nav class="pagination">
+			<a href="{{ currentPage > 1 ? path('job.all', app.request.query.all|merge({'page': currentPage - 1})) : '#' }}"
+			   class="page-link {{ currentPage <= 1 ? 'disabled' : '' }}"
+			   {{ currentPage <= 1 ? 'onclick="return false;"' : '' }}>Précédent</a>
+	
+			{% for i in 1..totalPages %}
+				<a href="{{ path('job.all', app.request.query.all|merge({'page': i})) }}"
+				   class="page-link {{ i == currentPage ? 'active' : '' }}">{{ i }}</a>
+			{% endfor %}
+	
+			<a href="{{ currentPage < totalPages ? path('job.all', app.request.query.all|merge({'page': currentPage + 1})) : '#' }}"
+			   class="page-link {{ currentPage >= totalPages ? 'disabled' : '' }}"
+			   {{ currentPage >= totalPages ? 'onclick="return false;"' : '' }}>Suivant</a>
+		</nav>
+	{% endif %}
+	
 	{% include 'footer.html.twig' %}
 	{% block javascripts %}
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
