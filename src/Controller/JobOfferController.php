@@ -17,14 +17,14 @@ final class JobOfferController extends AbstractController
     public function index(Request $request, EntityManagerInterface $em): Response
     {
         $limit = 3;
-        $paginator = $em->getRepository(JobOffer::class)->searchAndPaginate($request, $limit);
+        $joboffers = $em->getRepository(JobOffer::class)->searchAndPaginate($request, $limit);
     
-        $totalItems = count($paginator);
+        $totaljobs = count($joboffers);
         $currentPage = max(1, (int) $request->query->get('page', 1));
-        $totalPages = ceil($totalItems / $limit);
+        $totalPages = ceil($totaljobs / $limit);
     
         return $this->render('condidate/jobs.html.twig', [
-            'joboffers' => iterator_to_array($paginator),
+            'joboffers' => $joboffers,
             'locations' => $this->getTunisianGovernorates(),
             'categories' => $em->getRepository(Category::class)->findAll(),
             'currentPage' => $currentPage,
