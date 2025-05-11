@@ -167,7 +167,7 @@
 									<i class="fas fa-eye"></i>
 									Détails
 								</a>
-								<form method="post" action="{{ path("app_application", {id: jobOffer.id}) }}">
+								<form method="get" action="{{ path("app_application", {id: jobOffer.id}) }}">
 									<input type="hidden" name="_token" value="{{ csrf_token('apply' ~ jobOffer.id) }}">
 									<button type="submit" class="btn btn-apply text-light">
 										<i class="fas fa-paper-plane"></i>

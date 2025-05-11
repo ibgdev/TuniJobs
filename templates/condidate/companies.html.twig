@@ -1,185 +1,188 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les entreprises | Annuaire Professionnel{% endblock %}
+{% block title %}Les entreprises | Annuaire Professionnel
+{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/companies.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/companies.css') }}">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-    {% include 'navbar.html.twig' %}
+	{% include 'navbar.html.twig' %}
 
-    <div class="hero-section">
-        <div class="container">
-            <h1>Annuaire des Entreprises</h1>
-            <p>Trouvez facilement les informations professionnelles dont vous avez besoin</p>
-        </div>
-    </div>
+	<div class="hero-section">
+		<div class="container">
+			<h1>Annuaire des Entreprises</h1>
+			<p>Trouvez facilement les informations professionnelles dont vous avez besoin</p>
+		</div>
+	</div>
 
-    <div class="container mt-4">
-        <div class="search-filter-container">
-            <div class="search-containerr">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" id="searchInput" placeholder="Rechercher une entreprise ou un secteur..." class="search-input">
-            </div>
+	<div class="container mt-4">
+		<div class="search-filter-container">
+			<div class="search-containerr">
+				<i class="fa-solid fa-magnifying-glass search-icon"></i>
+				<input type="text" id="searchInput" placeholder="Rechercher une entreprise ou un secteur..." class="search-input">
+			</div>
 
-            <div class="filter-container">
-                <div class="filter-label">Filtrer par secteur:</div>
-                <div class="filter-options">
-                    <a href="#" class="sector-filter active" data-sector="all">Tous</a>
-                    {% set sectors = [] %}
-                    {% for company in companies %}
-                        {% if company.secteur not in sectors %}
-                            {% set sectors = sectors|merge([company.secteur]) %}
-                        {% endif %}
-                    {% endfor %}
+			<div class="filter-container">
+				<div class="filter-label">Filtrer par secteur:</div>
+				<div class="filter-options">
+					<a href="#" class="sector-filter active" data-sector="all">Tous</a>
+					{% set sectors = [] %}
+					{% for company in companies %}
+						{% if company.secteur not in sectors %}
+							{% set sectors = sectors|merge([company.secteur]) %}
+						{% endif %}
+					{% endfor %}
 
-                    {% for sector in sectors %}
-                        <a href="#" class="sector-filter" data-sector="{{ sector }}">{{ sector }}</a>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+					{% for sector in sectors %}
+						<a href="#" class="sector-filter" data-sector="{{ sector }}">{{ sector }}</a>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
 
-        <div class="companies-stats">
-            <div class="stat-item">
-                <i class="fa-solid fa-building"></i>
-                <div class="stat-details">
-                    <span class="stat-count">{{ companies|length }}</span>
-                    <span class="stat-label">Entreprises</span>
-                </div>
-            </div>
-            <div class="stat-item">
-                <i class="fa-solid fa-briefcase"></i>
-                <div class="stat-details">
-                    <span class="stat-count">{{ sectors|length }}</span>
-                    <span class="stat-label">Secteurs</span>
-                </div>
-            </div>
-        </div>
+		<div class="companies-stats">
+			<div class="stat-item">
+				<i class="fa-solid fa-building"></i>
+				<div class="stat-details">
+					<span class="stat-count">{{ companies|length }}</span>
+					<span class="stat-label">Entreprises</span>
+				</div>
+			</div>
+			<div class="stat-item">
+				<i class="fa-solid fa-briefcase"></i>
+				<div class="stat-details">
+					<span class="stat-count">{{ sectors|length }}</span>
+					<span class="stat-label">Secteurs</span>
+				</div>
+			</div>
+		</div>
 
-        <div class="row mt-4" id="companiesContainer">
-            {% for company in companies %}
-                <div class="col-md-6 col-lg-4 mb-4 company-card">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                <img src="{{ company.logourl }}" alt="{{ company.logourl }} logo" style="width: 50px;">
-                                {{ company.nom }}
-                            </h5>
-                            <span class="card-text secteur">
-                                <i class="fa-solid fa-briefcase"></i>
-                                {{ company.secteur }}
-                            </span>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">
-                                <i class="fa-solid fa-receipt"></i>
-                                <span class="info-label">Matricule Fiscale:</span>
-                                <span class="info-value">{{ company.matriculeFiscale }}</span>
-                            </p>
-                            <p class="card-text">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <span class="info-label">Adresse:</span>
-                                <span class="info-value">{{ company.adresse }}</span>
-                            </p>
-                            <p class="card-text">
-                                <i class="fa-solid fa-globe"></i>
-                                <span class="info-label">Site Web:</span>
-                                <span class="info-value">
-                                    <a href="{{ company.siteweb }}" target="_blank">{{ company.siteweb }}</a>
-                                </span>
-                            </p>
-                            <p class="card-text">
-                                <i class="fa-solid fa-phone"></i>
-                                <span class="info-label">Téléphone:</span>
-                                <span class="info-value">{{ company.telephone }}</span>
-                            </p>
-                            <p class="card-text">
-                                <i class="fa-solid fa-user"></i>
-                                <span class="info-label">Responsable:</span>
-                                <span class="info-value">
-                                    {% if company.responsable %}
-                                        {{ company.responsable.nom }}
-                                    {% else %}
-                                        <em>Pas de responsable</em>
-                                    {% endif %}
-                                </span>
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="{{ path("app_review", {id: company.id}) }}" class="btn-contact" data-company="{{ company.nom }}">
-                                <i class="fa-regular fa-comment" style="color: #ffffff;"></i>
-                                Avis
-                            </a>
-                            <a href="{{ path("condidate.entreprise", {id: company.id}) }}" class="btn-details" data-company="{{ company.id }}">
-                                <i class="fa-solid fa-eye"></i>
-                                Détails
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+		<div class="row mt-4" id="companiesContainer">
+			{% for company in companies %}
+				<div class="col-md-6 col-lg-4 mb-4 company-card">
+					<div class="card h-100 shadow-sm">
+						<div class="card-header">
+							<h5 class="card-title">
+								<img src="{{ company.logourl }}" alt="{{ company.logourl }} logo" style="width: 50px;">
+								{{ company.nom }}
+							</h5>
+							<span class="card-text secteur">
+								<i class="fa-solid fa-briefcase"></i>
+								{{ company.secteur }}
+							</span>
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								<i class="fa-solid fa-receipt"></i>
+								<span class="info-label">Matricule Fiscale:</span>
+								<span class="info-value">{{ company.matriculeFiscale }}</span>
+							</p>
+							<p class="card-text">
+								<i class="fa-solid fa-location-dot"></i>
+								<span class="info-label">Adresse:</span>
+								<span class="info-value">{{ company.adresse }}</span>
+							</p>
+							<p class="card-text">
+								<i class="fa-solid fa-globe"></i>
+								<span class="info-label">Site Web:</span>
+								<span class="info-value">
+									<a href="{{ company.siteweb }}" target="_blank">{{ company.siteweb }}</a>
+								</span>
+							</p>
+							<p class="card-text">
+								<i class="fa-solid fa-phone"></i>
+								<span class="info-label">Téléphone:</span>
+								<span class="info-value">{{ company.telephone }}</span>
+							</p>
+							<p class="card-text">
+								<i class="fa-solid fa-user"></i>
+								<span class="info-label">Responsable:</span>
+								<span class="info-value">
+									{% if company.responsable %}
+										{{ company.responsable.nom }}
+									{% else %}
+										<em>Pas de responsable</em>
+									{% endif %}
+								</span>
+							</p>
+						</div>
+						<div class="card-footer">
+							<a href="{{ path("app_review", {id: company.id}) }}" class="btn-contact" data-company="{{ company.nom }}">
+								<i class="fa-regular fa-comment" style="color: #ffffff;"></i>
+								Avis
+							</a>
+							<a href="{{ path("condidate.entreprise", {id: company.id}) }}" class="btn-details" data-company="{{ company.id }}">
+								<i class="fa-solid fa-eye"></i>
+								Détails
+							</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
 
-            <div id="noResults" class="no-results" style="display: none;">
-                <div class="empty-state">
-                    <i class="fa-solid fa-search-minus empty-icon"></i>
-                    <h3>Aucune entreprise trouvée</h3>
-                    <p>Essayez de modifier vos critères de recherche</p>
-                </div>
-            </div>
-        </div>
-    </div>
+			<div id="noResults" class="no-results" style="display: none;">
+				<div class="empty-state">
+					<i class="fa-solid fa-search-minus empty-icon"></i>
+					<h3>Aucune entreprise trouvée</h3>
+					<p>Essayez de modifier vos critères de recherche</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    {% include "footer.html.twig" %}
+	{% include "footer.html.twig" %}
 {% endblock %}
-    {% block javascripts %}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <script>
-            window.addEventListener('DOMContentLoaded', () => {
-                // Search functionality
-                document.getElementById('searchInput').addEventListener('keyup', function () {
-                    const searchValue = this.value.toLowerCase();
-                    const companyCards = document.querySelectorAll('.company-card');
+{% block javascripts %}
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<script>
+		window.addEventListener('DOMContentLoaded', () => { // Search functionality
+document.getElementById('searchInput').addEventListener('keyup', function () {
+const searchValue = this.value.toLowerCase();
+const companyCards = document.querySelectorAll('.company-card');
 
-                    companyCards.forEach(card => {
-                        const companyName = card.querySelector('.card-title').textContent.toLowerCase();
-                        const companySector = card.querySelector('.secteur').textContent.toLowerCase();
+companyCards.forEach(card => {
+const companyName = card.querySelector('.card-title').textContent.toLowerCase();
+const companySector = card.querySelector('.secteur').textContent.toLowerCase();
 
-                        if (companyName.includes(searchValue) || companySector.includes(searchValue)) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
+if (companyName.includes(searchValue) || companySector.includes(searchValue)) {
+card.style.display = 'block';
+} else {
+card.style.display = 'none';
+}
+});
 
-                    const visibleCards = document.querySelectorAll('.company-card[style="display: block"]');
-                    document.getElementById('noResults').style.display = visibleCards.length === 0 ? 'block' : 'none';
-                });
+const visibleCards = document.querySelectorAll('.company-card[style="display: block"]');
+document.getElementById('noResults').style.display = visibleCards.length === 0 ? 'block' : 'none';
+});
 
-                // Sector filter
-                const sectorLinks = document.querySelectorAll('.sector-filter');
-                sectorLinks.forEach(link => {
-                    link.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        sectorLinks.forEach(l => l.classList.remove('active'));
-                        this.classList.add('active');
+// Sector filter
+const sectorLinks = document.querySelectorAll('.sector-filter');
+sectorLinks.forEach(link => {
+link.addEventListener('click', function (e) {
+e.preventDefault();
+sectorLinks.forEach(l => l.classList.remove('active'));
+this.classList.add('active');
 
-                        const sector = this.getAttribute('data-sector');
-                        const companyCards = document.querySelectorAll('.company-card');
+const sector = this.getAttribute('data-sector');
+const companyCards = document.querySelectorAll('.company-card');
 
-                        companyCards.forEach(card => {
-                            const companySector = card.querySelector('.secteur').textContent.trim().toLowerCase();
-                            card.style.display = (sector === 'all' || companySector.includes(sector.toLowerCase())) ? 'block' : 'none';
-                        });
+companyCards.forEach(card => {
+const companySector = card.querySelector('.secteur').textContent.trim().toLowerCase();
+card.style.display = (sector === 'all' || companySector.includes(sector.toLowerCase())) ? 'block' : 'none';
+});
 
-                        const visibleCards = Array.from(companyCards).filter(c => c.style.display !== 'none');
-                        document.getElementById('noResults').style.display = visibleCards.length === 0 ? 'block' : 'none';
-                    });
-                });
-            });
-        </script>
-    {% endblock %}
+const visibleCards = Array.from(companyCards).filter(c => c.style.display !== 'none');
+document.getElementById('noResults').style.display = visibleCards.length === 0 ? 'block' : 'none';
+});
+});
+});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+{% endblock %}
+
