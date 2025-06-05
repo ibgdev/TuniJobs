@@ -33,7 +33,7 @@ final class ApplicationController extends AbstractController
     public function entreprise_apps(EntityManagerInterface $em): Response
     {
         $entreprise = $em->getRepository(Company::class)->findBy(["responsable" => $this->getUser()]);
-        
+
         if (!$this->getUser()) {
             return $this->redirectToRoute("app_login");
         } else {
@@ -41,25 +41,25 @@ final class ApplicationController extends AbstractController
                 return $this->redirectToRoute("app_home");
             }
         }
-    
+
         // Fetch all applications
         $apps = $em->getRepository(Application::class)->findByEntreprise($entreprise[0]->getId());
 
         // Calculate the total number of applications (all_count)
         $all_count = count($apps);
-    
+
         // Calculate the number of pending applications (pending_count)
-        $pending_count = count(array_filter($apps, function($app) {
+        $pending_count = count(array_filter($apps, function ($app) {
             return $app->getStatut() === 'en attente'; // Adjust 'pending' to the correct status
         }));
-    
-        $accepted_count = count(array_filter($apps, function($app) {
+
+        $accepted_count = count(array_filter($apps, function ($app) {
             return $app->getStatut() === 'Acceptée'; // Adjust 'pending' to the correct status
         }));
-        $rejected_count = count(array_filter($apps, function($app) {
-            return $app->getStatut() === 'Refusée'; 
+        $rejected_count = count(array_filter($apps, function ($app) {
+            return $app->getStatut() === 'Refusée';
         }));
-    
+
         return $this->render("entreprise/applications.html.twig", [
             "applications" => $apps,
             "all_count" => $all_count, // Pass the all_count variable to the template
@@ -68,58 +68,58 @@ final class ApplicationController extends AbstractController
             "rejected_count" => $rejected_count
         ]);
     }
-    
-    
-    
- #[Route('/entreprise/applications/filter', name: 'app_candidature_index')]
-public function entreprise_status_apps(Request $request, EntityManagerInterface $em): Response
-{
-    $statut = $request->query->get('statut');  // Get the statut from the query parameter
-    $entreprise = $em->getRepository(Company::class)->findBy(['responsable' => $this->getUser()]);
-    
-    if (!$this->getUser()) {
-        return $this->redirectToRoute("app_login");
-    } else {
-        if (!in_array("ROLE_ENTERPRISE", $this->getUser()->getRoles())) {
-            return $this->redirectToRoute("app_home");
+
+
+
+    #[Route('/entreprise/applications/filter', name: 'app_candidature_index')]
+    public function entreprise_status_apps(Request $request, EntityManagerInterface $em): Response
+    {
+        $statut = $request->query->get('statut');  // Get the statut from the query parameter
+        $entreprise = $em->getRepository(Company::class)->findBy(['responsable' => $this->getUser()]);
+
+        if (!$this->getUser()) {
+            return $this->redirectToRoute("app_login");
+        } else {
+            if (!in_array("ROLE_ENTERPRISE", $this->getUser()->getRoles())) {
+                return $this->redirectToRoute("app_home");
+            }
         }
+
+        // Calculate the number of pending applications (pending_count)
+
+
+
+        // Get all applications for the entreprise
+        $apps = $em->getRepository(Application::class)->findByEntreprise($entreprise[0]->getId());
+        $all_count = count($apps);
+
+        $pending_count = count(array_filter($apps, function ($app) {
+            return $app->getStatut() === 'en attente'; // Adjust 'pending' to the correct status
+        }));
+
+        $accepted_count = count(array_filter($apps, function ($app) {
+            return $app->getStatut() === 'Acceptée'; // Adjust 'pending' to the correct status
+        }));
+        $rejected_count = count(array_filter($apps, function ($app) {
+            return $app->getStatut() === 'Refusée'; // Adjust 'pending' to the correct status
+        }));
+
+        // If a statut is provided, filter the applications by status
+        if ($statut) {
+            $apps = array_filter($apps, function ($app) use ($statut) {
+                return $app->getStatut() === $statut;  // Adjust 'getStatut()' to your actual method for getting status
+            });
+        }
+
+        // Return the filtered applications to the Twig template
+        return $this->render("entreprise/applications.html.twig", [
+            "applications" => $apps,
+            "all_count" => $all_count,
+            "pending_count" => $pending_count,
+            "accepted_count" => $accepted_count,
+            "rejected_count" => $rejected_count
+        ]);
     }
-
-            // Calculate the number of pending applications (pending_count)
-
-        
-
-    // Get all applications for the entreprise
-    $apps = $em->getRepository(Application::class)->findByEntreprise($entreprise[0]->getId());
-    $all_count = count($apps);
-
-    $pending_count = count(array_filter($apps, function($app) {
-        return $app->getStatut() === 'en attente'; // Adjust 'pending' to the correct status
-    }));
-
-    $accepted_count = count(array_filter($apps, function($app) {
-        return $app->getStatut() === 'Acceptée'; // Adjust 'pending' to the correct status
-    }));
-    $rejected_count = count(array_filter($apps, function($app) {
-        return $app->getStatut() === 'Refusée'; // Adjust 'pending' to the correct status
-    }));
-
-    // If a statut is provided, filter the applications by status
-    if ($statut) {
-        $apps = array_filter($apps, function($app) use ($statut) {
-            return $app->getStatut() === $statut;  // Adjust 'getStatut()' to your actual method for getting status
-        });
-    }
-
-    // Return the filtered applications to the Twig template
-    return $this->render("entreprise/applications.html.twig", [
-        "applications" => $apps,
-        "all_count" => $all_count,
-        "pending_count" => $pending_count,
-        "accepted_count" => $accepted_count,
-        "rejected_count" => $rejected_count
-    ]);
-}
 
     #[Route('/jobs/details/{id}/apply', name: 'app_application')]
     public function index(Request $request, EntityManagerInterface $em, MailerService $mailerService, Security $security, JobOffer $jobOffer): Response
@@ -164,20 +164,18 @@ public function entreprise_status_apps(Request $request, EntityManagerInterface 
             $em->persist($application);
             $em->flush();
 
-            // Send email to candidate
-            $candidateEmail = $user->getUserIdentifier();
-            $subjectCandidate = 'Confirmation de candidature';
-            $bodyCandidate = 'Vous avez postulé à l\'offre : ' . $jobOffer->getTitre();
-            $mailerService->sendEmail($candidateEmail, $subjectCandidate, $bodyCandidate);
+            // // Send email to candidate
+            // $candidateEmail = $user->getUserIdentifier();
+            // $subjectCandidate = 'Confirmation de candidature';
+            // $bodyCandidate = 'Vous avez postulé à l\'offre : ' . $jobOffer->getTitre();
+            // $mailerService->sendEmail($candidateEmail, $subjectCandidate, $bodyCandidate);
 
-            // Send email to company
-            $companyEmail = $jobOffer->getEntreprise()->getResponsable()->getEmail();
-            $subjectCompany = 'Nouvelle candidature reçue';
-            $bodyCompany = 'Une nouvelle candidature a été reçue pour votre offre : ' . $jobOffer->getTitre();
-            $mailerService->sendEmail($companyEmail, $subjectCompany, $bodyCompany);
-
+            // // Send email to company
+            // $companyEmail = $jobOffer->getEntreprise()->getResponsable()->getEmail();
+            // $subjectCompany = 'Nouvelle candidature reçue';
+            // $bodyCompany = 'Une nouvelle candidature a été reçue pour votre offre : ' . $jobOffer->getTitre();
+            // $mailerService->sendEmail($companyEmail, $subjectCompany, $bodyCompany);
             $this->addFlash('success', 'Votre candidature a été envoyée avec succès.');
-
             return $this->redirectToRoute('job.details', ['id' => $jobOffer->getId()]);
         }
 
